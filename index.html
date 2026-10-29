@@ -68,6 +68,10 @@
       70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
     }
+    @keyframes popIn {
+      0% { transform: scale(0.65); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
     .animate-bounce-slow {
       animation: bounce-slow 2.2s infinite ease-in-out;
     }
@@ -332,39 +336,49 @@
         <span>۱. تمساح شکمو (شمارش ماهی‌ها)</span>
       </button>
 
+      <button onclick="selectDrawerTab('number-house', 'خانه دوستی اعداد')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="number-house">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-house-chimney-user"></i></span>
+        <span>۲. خانه دوستی اعداد (تا ۳۰) 🏠</span>
+      </button>
+
+      <button onclick="selectDrawerTab('clock', 'ساعت و زمان‌خوانی')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="clock">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-clock"></i></span>
+        <span>۳. ساعت و زمان‌خوانی ⏰</span>
+      </button>
+
       <button onclick="selectDrawerTab('patterns', 'قطار الگوها')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="patterns">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-train"></i></span>
-        <span>۲. قطار الگوها و هسته تکرار</span>
+        <span>۴. قطار الگوها و هسته تکرار</span>
       </button>
 
       <button onclick="selectDrawerTab('pure-math', 'جمع و تفریق ساده')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="pure-math">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-bolt"></i></span>
-        <span>۳. جمع و تفریق ساده (ذهنی)</span>
+        <span>۵. جمع و تفریق ساده (ذهنی)</span>
       </button>
 
       <button onclick="selectDrawerTab('counting', 'شمارش و اشیاء')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="counting">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-calculator"></i></span>
-        <span>۴. لمس و شمارش اشیاء</span>
+        <span>۶. لمس و شمارش اشیاء</span>
       </button>
 
       <button onclick="selectDrawerTab('animal-farm', 'مزرعه حیوانات')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="animal-farm">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-paw"></i></span>
-        <span>۵. مزرعه حیوانات</span>
+        <span>۷. مزرعه حیوانات</span>
       </button>
 
       <button onclick="selectDrawerTab('axis', 'قورباغه روی محور')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="axis">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-road"></i></span>
-        <span>۶. قورباغه روی محور اعداد</span>
+        <span>۸. قورباغه روی محور اعداد</span>
       </button>
 
       <button onclick="selectDrawerTab('tally', 'چوب‌خط و دسته‌بندی')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="tally">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-bars-staggered"></i></span>
-        <span>۷. چوب‌خط ۵ تایی</span>
+        <span>۹. چوب‌خط ۵ تایی</span>
       </button>
 
       <button onclick="selectDrawerTab('sudoku', 'جدول شگفت‌انگیز')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="sudoku">
         <span class="text-xl w-6 text-center"><i class="fa-solid fa-puzzle-piece"></i></span>
-        <span>۸. جدول شگفت‌انگیز</span>
+        <span>۱۰. جدول شگفت‌انگیز (کامل و جدید)</span>
       </button>
     </div>
 
@@ -462,6 +476,140 @@
         </div>
 
         <div id="compare-feedback" class="h-8 text-center font-black text-sm sm:text-base mt-2 flex items-center justify-center"></div>
+      </div>
+    </section>
+
+    <!-- بخش خانه دوستی و تجزیه اعداد (Number Bonds) تا ۳۰ -->
+    <section id="section-number-house" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-base sm:text-xl font-black text-sky-950 flex items-center gap-2">
+              <span>خانه دوستی اعداد 🏠</span>
+              <span class="text-xs bg-sky-100 text-sky-800 font-bold px-2.5 py-0.5 rounded-lg border border-sky-300">ترکیب و تجزیه</span>
+            </h2>
+            <p class="text-[11px] text-sky-700 font-bold mt-0.5">دو دوست داخل اتاق‌ها با هم جمع می‌شوند تا عدد سقف خانه ساخته شود!</p>
+          </div>
+
+          <!-- فیلتر سقف اعداد: تا ۵، ۱۰، ۲۰، ۳۰ -->
+          <div class="flex flex-wrap gap-1 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+            <button onclick="setHouseMax(5)" id="house-max-5" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۵</button>
+            <button onclick="setHouseMax(10)" id="house-max-10" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">تا ۱۰</button>
+            <button onclick="setHouseMax(20)" id="house-max-20" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۲۰</button>
+            <button onclick="setHouseMax(30)" id="house-max-30" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۳۰</button>
+          </div>
+        </div>
+
+        <!-- گرافیک خانه و اتاق‌های دوستی -->
+        <div class="max-w-md mx-auto my-3 bg-gradient-to-b from-sky-100/90 via-sky-50 to-white rounded-3xl p-4 sm:p-6 border-2 border-sky-300 shadow-md flex flex-col items-center">
+          
+          <!-- سقف شیروانی خانه با عدد کل -->
+          <div class="relative flex flex-col items-center mb-3">
+            <div class="w-24 sm:w-28 h-14 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-t-3xl border-3 border-amber-600 shadow flex flex-col items-center justify-center">
+              <span class="text-[10px] font-bold text-amber-100">سقف خانه</span>
+              <span id="house-roof-number" class="text-3xl font-black tracking-wider leading-none">۱۰</span>
+            </div>
+            <!-- لوله‌های اتصال به دو اتاق -->
+            <div class="flex justify-between w-40 sm:w-48 -mt-1 px-4">
+              <div class="w-1.5 h-6 bg-sky-400 rounded-full rotate-[24deg]"></div>
+              <div class="w-1.5 h-6 bg-sky-400 rounded-full -rotate-[24deg]"></div>
+            </div>
+          </div>
+
+          <!-- دو اتاق دوستی -->
+          <div class="flex items-center justify-center gap-6 sm:gap-10 w-full">
+            <!-- اتاق سمت راست (شناخته شده) -->
+            <div class="flex flex-col items-center bg-white p-3 sm:p-4 rounded-2xl border-2 border-sky-300 shadow-sm w-28 sm:w-32">
+              <span class="text-[10px] font-bold text-slate-500 mb-1">دوست اول</span>
+              <div id="house-known-room" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-sky-50 text-sky-800 border-2 border-sky-200 flex items-center justify-center text-3xl font-black shadow-inner">۷</div>
+            </div>
+
+            <!-- علامت + نامرئی و نمادین -->
+            <div class="text-2xl font-black text-sky-400 font-sans">+</div>
+
+            <!-- اتاق سمت چپ (دوست گمشده) -->
+            <div class="flex flex-col items-center bg-white p-3 sm:p-4 rounded-2xl border-2 border-amber-300 shadow-sm w-28 sm:w-32">
+              <span class="text-[10px] font-bold text-amber-700 mb-1">دوست گمشده؟</span>
+              <div id="house-unknown-room" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-50 text-amber-600 border-2 border-dashed border-amber-400 flex items-center justify-center text-3xl font-black shadow-inner animate-pulse">؟</div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-xs font-bold text-sky-800 text-center">
+            چه عددی با <span id="house-known-hint" class="font-black text-sky-700 text-sm">۷</span> جمع شود تا بشود <span id="house-roof-hint" class="font-black text-orange-600 text-sm">۱۰</span>؟
+          </div>
+        </div>
+
+        <!-- گزینه‌های انتخابی برای اتاق دوم -->
+        <div class="grid grid-cols-4 gap-2.5 max-w-sm mx-auto mt-2" id="house-options-grid"></div>
+        <div id="house-feedback" class="h-8 text-center font-black text-sm mt-2 flex items-center justify-center"></div>
+      </div>
+    </section>
+
+    <!-- بخش جدید: ساعت و زمان‌خوانی (ساعت‌های تمام و نیم) -->
+    <section id="section-clock" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-base sm:text-xl font-black text-sky-950 flex items-center gap-2">
+              <span>ساعت چند است؟ ⏰</span>
+              <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-lg border border-amber-300">ساعت و نیم</span>
+            </h2>
+            <p class="text-[11px] text-sky-700 font-bold mt-0.5">به عقربه‌ها نگاه کن؛ عقربه کوتاه ساعت‌شمار و بلند دقیقه‌شمار است.</p>
+          </div>
+
+          <div class="flex gap-1 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+            <button onclick="setClockMode('exact')" id="clk-mode-exact" class="px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">ساعت تمام (رُند)</button>
+            <button onclick="setClockMode('half')" id="clk-mode-half" class="px-2.5 py-1 rounded-lg text-sky-900 font-bold">ساعت و نیم</button>
+            <button onclick="setClockMode('mixed')" id="clk-mode-mixed" class="px-2.5 py-1 rounded-lg text-sky-900 font-bold">ترکیبی</button>
+          </div>
+        </div>
+
+        <!-- صفحه ساعت با SVG واکنش‌گرا -->
+        <div class="bg-gradient-to-b from-sky-50 to-white rounded-3xl p-4 border-2 border-sky-300 shadow-sm flex flex-col items-center justify-center max-w-sm mx-auto my-2">
+          <div class="relative w-48 h-48 sm:w-56 sm:h-56 bg-white rounded-full border-6 border-sky-500 shadow-lg flex items-center justify-center p-2">
+            <svg id="analog-clock-svg" class="w-full h-full" viewBox="0 0 200 200">
+              <!-- صفحه دایره‌ای ساعت -->
+              <circle cx="100" cy="100" r="92" fill="#F8FAFC" stroke="#BAE6FD" stroke-width="4"/>
+              
+              <!-- نشانگرهای ۱ تا ۱۲ -->
+              <g id="clock-face-numbers" class="font-black text-sm select-none" fill="#0369A1" text-anchor="middle" dominant-baseline="central">
+                <text x="100" y="24">۱۲</text>
+                <text x="140" y="34">۱</text>
+                <text x="168" y="62">۲</text>
+                <text x="178" y="100">۳</text>
+                <text x="168" y="138">۴</text>
+                <text x="140" y="166">۵</text>
+                <text x="100" y="176">۶</text>
+                <text x="60" y="166">۷</text>
+                <text x="32" y="138">۸</text>
+                <text x="22" y="100">۹</text>
+                <text x="32" y="62">۱۰</text>
+                <text x="60" y="34">۱۱</text>
+              </g>
+
+              <!-- عقربه ساعت‌شمار کوتاه (قرمز/نارنجی) -->
+              <line id="clock-hour-hand" x1="100" y1="100" x2="100" y2="55" stroke="#EF4444" stroke-width="6" stroke-linecap="round" transform="rotate(0 100 100)"/>
+
+              <!-- عقربه دقیقه‌شمار بلند (آبی) -->
+              <line id="clock-minute-hand" x1="100" y1="100" x2="100" y2="35" stroke="#0284C7" stroke-width="4.5" stroke-linecap="round" transform="rotate(0 100 100)"/>
+
+              <!-- نقطه مرکزی ساعت -->
+              <circle cx="100" cy="100" r="6" fill="#0F172A"/>
+              <circle cx="100" cy="100" r="2.5" fill="#FFFFFF"/>
+            </svg>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2">
+            <span class="text-xs font-bold text-sky-800">ساعت چند را نشان می‌دهد؟</span>
+            <button onclick="newClockGame()" class="text-sky-600 hover:text-sky-800 text-xs font-bold px-2 py-1 bg-white border border-sky-200 rounded-lg btn-3d">
+              <i class="fa-solid fa-arrows-rotate ml-1"></i>ساعت دیگر
+            </button>
+          </div>
+        </div>
+
+        <!-- دکمه‌های گزینه‌ها -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-md mx-auto mt-2" id="clock-options-grid"></div>
+        <div id="clock-feedback" class="h-8 text-center font-black text-sm mt-2 flex items-center justify-center"></div>
       </div>
     </section>
 
@@ -741,40 +889,69 @@
       </div>
     </section>
 
-    <!-- ۸. جدول شگفت‌انگیز -->
+    <!-- ۸. جدول شگفت‌انگیز ارتقایافته و بازطراحی شده با تمام حالت‌های قبلی و پالت‌های جدید -->
     <section id="section-sudoku" class="tab-panel hidden">
       <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
-        <div class="flex items-center justify-between gap-2 mb-3">
-          <h2 class="text-base sm:text-xl font-black text-sky-950">جدول شگفت‌انگیز 🧩</h2>
-          <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold shrink-0">
-            <button onclick="setSudokuLevel('easy')" id="sudoku-lvl-easy" class="px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs">۳×۳</button>
-            <button onclick="setSudokuLevel('medium')" id="sudoku-lvl-medium" class="px-2 py-0.5 rounded-lg text-sky-900">۴×۴ تک</button>
-            <button onclick="setSudokuLevel('hard')" id="sudoku-lvl-hard" class="px-2 py-0.5 rounded-lg text-sky-900">۴×۴ کامل</button>
+        
+        <!-- کنترل‌های پیشرفته و مدرن جدول شگفت‌انگیز -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2.5 mb-3">
+          <div>
+            <h2 class="text-base sm:text-xl font-black text-sky-950 flex items-center gap-2">
+              <span>جدول شگفت‌انگیز (سودوکو هوشمند) 🧩</span>
+            </h2>
+            <p class="text-[11px] text-sky-700 font-bold mt-0.5">در هیچ سطر، ستون یا جعبه‌ای نباید تصویر تکراری باشد!</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+            <!-- پالت‌های قبلی و جدید -->
+            <div class="flex flex-wrap gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setSudokuTheme('shapes')" id="sdk-thm-shapes" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">اشکال هندسی 🔺</button>
+              <button onclick="setSudokuTheme('colors')" id="sdk-thm-colors" class="px-2 py-1 rounded-lg text-sky-900 font-bold">رنگ‌ها 🔴</button>
+              <button onclick="setSudokuTheme('digits')" id="sdk-thm-digits" class="px-2 py-1 rounded-lg text-sky-900 font-bold">اعداد درسی ۱-۴</button>
+              <button onclick="setSudokuTheme('fruits')" id="sdk-thm-fruits" class="px-2 py-1 rounded-lg text-sky-900 font-bold">میوه‌ها 🍎</button>
+              <button onclick="setSudokuTheme('animals')" id="sdk-thm-animals" class="px-2 py-1 rounded-lg text-sky-900 font-bold">حیوانات 🐰</button>
+            </div>
+
+            <!-- سطح دشواری کامل (۳×۳، ۴×۴ تک، ۴×۴ کامل) -->
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setSudokuLevel('easy')" id="sudoku-lvl-easy" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">۳×۳ آسان</button>
+              <button onclick="setSudokuLevel('medium')" id="sudoku-lvl-medium" class="px-2 py-1 rounded-lg text-sky-900">۴×۴ تک‌جای‌خالی</button>
+              <button onclick="setSudokuLevel('hard')" id="sudoku-lvl-hard" class="px-2 py-1 rounded-lg text-sky-900">۴×۴ کامل</button>
+            </div>
           </div>
         </div>
 
+        <!-- بورد بازی با کادر و تفکیک بصری سه‌بعدی و سایه‌های تمیز -->
         <div class="flex justify-center mb-3">
-          <div id="sudoku-grid-wrapper" class="bg-white p-2.5 rounded-2xl border-2 border-sky-400 shadow-sm relative inline-block">
-            <div id="sudoku-grid" class="grid gap-1.5"></div>
+          <div id="sudoku-grid-wrapper" class="bg-gradient-to-br from-sky-50 to-white p-3 sm:p-4 rounded-3xl border-3 border-sky-400 shadow-lg relative inline-block">
+            <div id="sudoku-grid" class="grid gap-2"></div>
           </div>
         </div>
 
+        <!-- پالت گزینه‌ها برای پر کردن خانه خالی -->
         <div class="flex flex-col items-center">
-          <span class="text-[11px] font-bold text-slate-500 mb-1.5">خانه خالی را بزن، سپس رنگ یا شکل بگذار:</span>
-          <div class="flex flex-wrap justify-center gap-2" id="sudoku-palette-box"></div>
+          <div class="flex items-center justify-between w-full max-w-xs mb-1.5 px-2">
+            <span class="text-[11px] font-bold text-sky-800">انتخاب گزینه برای خانه علامت‌دار:</span>
+            <!-- دکمه پاک‌کن خانه در صورت اشتباه -->
+            <button onclick="clearSelectedSudokuCell()" class="text-[11px] font-bold text-rose-600 hover:text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-lg btn-3d">
+              <i class="fa-solid fa-eraser ml-1"></i>پاک کردن
+            </button>
+          </div>
+          
+          <div class="flex flex-wrap justify-center gap-2.5 bg-sky-50/80 p-2.5 rounded-2xl border border-sky-200" id="sudoku-palette-box"></div>
 
-          <div class="flex items-center gap-2 mt-3" id="sudoku-action-buttons">
-            <button onclick="checkFullSudoku()" id="sudoku-check-btn" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-4 py-2 rounded-xl text-xs shadow-xs btn-3d flex items-center gap-1">
+          <div class="flex items-center gap-2 mt-3.5" id="sudoku-action-buttons">
+            <button onclick="checkFullSudoku()" id="sudoku-check-btn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-black px-5 py-2.5 rounded-2xl text-xs sm:text-sm shadow-md btn-3d flex items-center gap-1.5">
               <i class="fa-solid fa-check"></i>
               <span>بررسی جدول</span>
             </button>
-            <button onclick="newSudokuGame()" class="bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold px-3 py-2 rounded-xl text-xs btn-3d flex items-center gap-1">
+            <button onclick="newSudokuGame()" class="bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold px-4 py-2.5 rounded-2xl text-xs sm:text-sm btn-3d flex items-center gap-1.5">
               <i class="fa-solid fa-arrows-rotate"></i>
-              <span>جدول بعدی</span>
+              <span>جدول جدید</span>
             </button>
           </div>
         </div>
-        <div id="sudoku-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+        <div id="sudoku-feedback" class="h-8 text-center font-black text-sm sm:text-base mt-2 flex items-center justify-center"></div>
       </div>
     </section>
 
@@ -1929,26 +2106,245 @@
     }
 
     /* ==========================================================
-       ۸. جدول شگفت‌انگیز (سودوکو)
+       بخش خانه دوستی و تجزیه اعداد (Number Bonds) تا ۳۰
+       ======================================================== */
+    let houseMax = 10;
+    let houseRoofNum = 10;
+    let houseKnownNum = 7;
+    let houseMissingNum = 3;
+
+    function setHouseMax(val) {
+      houseMax = val;
+      [5, 10, 20, 30].forEach(m => {
+        const btn = document.getElementById(`house-max-${m}`);
+        if (btn) {
+          btn.className = (m === val)
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      playTap();
+      newHouseGame();
+    }
+
+    function newHouseGame() {
+      const roofEl = document.getElementById('house-roof-number');
+      const knownEl = document.getElementById('house-known-room');
+      const unknownEl = document.getElementById('house-unknown-room');
+      const knownHint = document.getElementById('house-known-hint');
+      const roofHint = document.getElementById('house-roof-hint');
+      const grid = document.getElementById('house-options-grid');
+      const fb = document.getElementById('house-feedback');
+      if (!roofEl || !grid) return;
+
+      if (fb) fb.innerText = '';
+      grid.innerHTML = '';
+      if (unknownEl) {
+        unknownEl.innerText = '؟';
+        unknownEl.className = 'w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-50 text-amber-600 border-2 border-dashed border-amber-400 flex items-center justify-center text-3xl font-black shadow-inner animate-pulse';
+      }
+
+      let minRoof = 3;
+      if (houseMax === 10) minRoof = 5;
+      else if (houseMax === 20) minRoof = 11;
+      else if (houseMax === 30) minRoof = 21;
+
+      houseRoofNum = Math.floor(Math.random() * (houseMax - minRoof + 1)) + minRoof;
+      houseKnownNum = Math.floor(Math.random() * (houseRoofNum - 1)) + 1;
+      houseMissingNum = houseRoofNum - houseKnownNum;
+
+      roofEl.innerText = houseRoofNum.toLocaleString('fa-IR');
+      knownEl.innerText = houseKnownNum.toLocaleString('fa-IR');
+      if (knownHint) knownHint.innerText = houseKnownNum.toLocaleString('fa-IR');
+      if (roofHint) roofHint.innerText = houseRoofNum.toLocaleString('fa-IR');
+
+      const options = [houseMissingNum];
+      let attempts = 0;
+      while (options.length < 4 && attempts < 50) {
+        attempts++;
+        const delta = Math.floor(Math.random() * 9) - 4;
+        const fake = houseMissingNum + delta;
+        if (fake >= 0 && fake <= houseMax && !options.includes(fake)) {
+          options.push(fake);
+        }
+      }
+      while (options.length < 4) {
+        const fallback = Math.floor(Math.random() * (houseMax + 1));
+        if (!options.includes(fallback)) options.push(fallback);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'bg-white hover:bg-sky-50 border-2 border-sky-300 text-sky-950 font-black py-3 rounded-2xl text-2xl shadow-xs active:scale-95 transition btn-3d';
+        b.innerText = opt.toLocaleString('fa-IR');
+        b.onclick = () => checkHouseAnswer(opt);
+        grid.appendChild(b);
+      });
+    }
+
+    function checkHouseAnswer(selected) {
+      const fb = document.getElementById('house-feedback');
+      const unknownEl = document.getElementById('house-unknown-room');
+
+      if (selected === houseMissingNum) {
+        if (unknownEl) {
+          unknownEl.innerText = houseMissingNum.toLocaleString('fa-IR');
+          unknownEl.className = 'w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-emerald-100 text-emerald-800 border-2 border-emerald-400 flex items-center justify-center text-3xl font-black shadow-inner scale-105 transition';
+        }
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = `<span class="text-sky-900 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین! دوستی ${houseKnownNum.toLocaleString('fa-IR')} و ${houseMissingNum.toLocaleString('fa-IR')} شد ${houseRoofNum.toLocaleString('fa-IR')} 🏠👏</span>`;
+        setTimeout(newHouseGame, 1600);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">این دو عدد با هم سقف خانه را نمی‌سازند، دوباره حساب کن!</span>';
+      }
+    }
+
+    /* ==========================================================
+       بخش جدید: ساعت و زمان‌خوانی (ساعت‌های تمام و نیم)
+       ======================================================== */
+    let clockMode = 'exact'; // 'exact', 'half', 'mixed'
+    let currentHour = 3;
+    let currentMinute = 0; // 0 یا 30
+
+    function setClockMode(mode) {
+      clockMode = mode;
+      ['exact', 'half', 'mixed'].forEach(m => {
+        const b = document.getElementById(`clk-mode-${m}`);
+        if (b) {
+          b.className = (m === mode)
+            ? 'px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2.5 py-1 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      playTap();
+      newClockGame();
+    }
+
+    function newClockGame() {
+      const fb = document.getElementById('clock-feedback');
+      const grid = document.getElementById('clock-options-grid');
+      const hHand = document.getElementById('clock-hour-hand');
+      const mHand = document.getElementById('clock-minute-hand');
+      if (!grid || !hHand || !mHand) return;
+
+      if (fb) fb.innerText = '';
+      grid.innerHTML = '';
+
+      currentHour = Math.floor(Math.random() * 12) + 1; // 1 تا 12
+      if (clockMode === 'exact') {
+        currentMinute = 0;
+      } else if (clockMode === 'half') {
+        currentMinute = 30;
+      } else {
+        currentMinute = Math.random() < 0.5 ? 0 : 30;
+      }
+
+      // زاویه عقربه‌ها: هر ساعت 30 درجه، هر دقیقه 0.5 درجه برای ساعت‌شمار
+      const hourAngle = (currentHour % 12) * 30 + (currentMinute * 0.5);
+      const minuteAngle = currentMinute * 6; // هر دقیقه 6 درجه
+
+      hHand.setAttribute('transform', `rotate(${hourAngle} 100 100)`);
+      mHand.setAttribute('transform', `rotate(${minuteAngle} 100 100)`);
+
+      const formatTime = (h, m) => {
+        if (m === 0) return `ساعت ${h.toLocaleString('fa-IR')}`;
+        return `${h.toLocaleString('fa-IR')} و نیم`;
+      };
+
+      const correctAnsStr = formatTime(currentHour, currentMinute);
+      const options = [correctAnsStr];
+
+      while (options.length < 4) {
+        const randH = Math.floor(Math.random() * 12) + 1;
+        const randM = (clockMode === 'exact') ? 0 : (clockMode === 'half' ? 30 : (Math.random() < 0.5 ? 0 : 30));
+        const fakeStr = formatTime(randH, randM);
+        if (!options.includes(fakeStr)) {
+          options.push(fakeStr);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'bg-white hover:bg-sky-50 border-2 border-sky-300 text-sky-950 font-black py-3 rounded-2xl text-base sm:text-lg shadow-xs active:scale-95 transition btn-3d';
+        b.innerText = opt;
+        b.onclick = () => checkClockAnswer(opt, correctAnsStr);
+        grid.appendChild(b);
+      });
+    }
+
+    function checkClockAnswer(selected, correct) {
+      const fb = document.getElementById('clock-feedback');
+      if (selected === correct) {
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = `<span class="text-sky-900 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین! زمان دقیقاً ${correct} است ⏰👏</span>`;
+        setTimeout(newClockGame, 1600);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">به نوک عقربه‌ها با دقت بیشتری نگاه کن!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۸. جدول شگفت‌انگیز (سودوکو) کامل با تمام پالت‌ها
        ======================================================== */
     let sudokuLevel = 'easy';
+    let sudokuTheme = 'shapes'; // 'shapes', 'colors', 'digits', 'fruits', 'animals'
     let currentSudokuSize = 3;
     let sudokuBoard = [];
     let sudokuSolution = [];
     let selectedCell = null;
 
-    const shapePalette = [
-      { id: 'circle', symbol: '⚪' },
-      { id: 'square', symbol: '⬜' },
-      { id: 'triangle', symbol: '🔺' }
-    ];
+    const themePalettes = {
+      shapes: [
+        { id: 'c', symbol: '⚪' },
+        { id: 's', symbol: '⬜' },
+        { id: 't', symbol: '🔺' },
+        { id: 'd', symbol: '🔷' }
+      ],
+      colors: [
+        { id: 'r', symbol: '🔴' },
+        { id: 'y', symbol: '🟡' },
+        { id: 'g', symbol: '🟢' },
+        { id: 'b', symbol: '🔵' }
+      ],
+      digits: [
+        { id: '1', symbol: '۱' },
+        { id: '2', symbol: '۲' },
+        { id: '3', symbol: '۳' },
+        { id: '4', symbol: '۴' }
+      ],
+      fruits: [
+        { id: 'apple', symbol: '🍎' },
+        { id: 'banana', symbol: '🍌' },
+        { id: 'berry', symbol: '🍓' },
+        { id: 'grape', symbol: '🍇' }
+      ],
+      animals: [
+        { id: 'rabbit', symbol: '🐰' },
+        { id: 'chick', symbol: '🐥' },
+        { id: 'cat', symbol: '🐱' },
+        { id: 'bear', symbol: '🐻' }
+      ]
+    };
 
-    const colorPalette = [
-      { id: 'red', symbol: '🔴' },
-      { id: 'yellow', symbol: '🟡' },
-      { id: 'green', symbol: '🟢' },
-      { id: 'blue', symbol: '🔵' }
-    ];
+    function setSudokuTheme(th) {
+      sudokuTheme = th;
+      ['shapes', 'colors', 'digits', 'fruits', 'animals'].forEach(t => {
+        const b = document.getElementById(`sdk-thm-${t}`);
+        if (b) {
+          b.className = (t === th)
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      playTap();
+      newSudokuGame();
+    }
 
     function setSudokuLevel(lvl) {
       sudokuLevel = lvl;
@@ -1956,8 +2352,8 @@
         const btn = document.getElementById(`sudoku-lvl-${l}`);
         if (btn) {
           btn.className = (l === lvl)
-            ? 'px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs'
-            : 'px-2 py-0.5 rounded-lg text-sky-900';
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900';
         }
       });
       playTap();
@@ -1968,45 +2364,57 @@
       const box = document.getElementById('sudoku-palette-box');
       if (!box) return;
       box.innerHTML = '';
-      const items = (sudokuLevel === 'easy') ? shapePalette : colorPalette;
+      const items = themePalettes[sudokuTheme].slice(0, currentSudokuSize);
 
       items.forEach(item => {
         const b = document.createElement('button');
-        b.className = 'w-11 h-11 text-2xl bg-white border border-sky-300 rounded-xl shadow-xs active:scale-95 transition flex items-center justify-center btn-3d';
+        b.className = 'w-12 h-12 text-2xl bg-white border-2 border-sky-300 hover:border-sky-500 rounded-2xl shadow-xs active:scale-90 transition flex items-center justify-center font-black text-sky-950 btn-3d';
         b.innerHTML = item.symbol;
         b.onclick = () => fillSelectedCell(item.symbol);
         box.appendChild(b);
       });
     }
 
+    function clearSelectedSudokuCell() {
+      if (!selectedCell) return;
+      const { r, c } = selectedCell;
+      if (sudokuBoard[r][c] !== '') return;
+      const cellEl = document.getElementById(`sdk-cell-${r}-${c}`);
+      if (cellEl) {
+        cellEl.innerHTML = '<span class="text-sky-300 text-sm font-black">؟</span>';
+        delete cellEl.dataset.userVal;
+        playTap();
+      }
+    }
+
     function newSudokuGame() {
       selectedCell = null;
       const fb = document.getElementById('sudoku-feedback');
       if (fb) fb.innerText = '';
-      renderSudokuPalette();
 
       const checkBtn = document.getElementById('sudoku-check-btn');
 
       if (sudokuLevel === 'easy') {
         currentSudokuSize = 3;
         if (checkBtn) checkBtn.style.display = 'inline-flex';
-        generateShapeSudoku3x3();
+        generateSudoku3x3();
       } else if (sudokuLevel === 'medium') {
         currentSudokuSize = 4;
         if (checkBtn) checkBtn.style.display = 'none';
-        generateColorSudoku4x4(true);
+        generateSudoku4x4(true);
       } else {
         currentSudokuSize = 4;
         if (checkBtn) checkBtn.style.display = 'inline-flex';
-        generateColorSudoku4x4(false);
+        generateSudoku4x4(false);
       }
 
+      renderSudokuPalette();
       drawSudokuBoard();
     }
 
-    function generateShapeSudoku3x3() {
-      const syms = ['⚪', '⬜', '🔺'];
-      const perm = [...syms].sort(() => Math.random() - 0.5);
+    function generateSudoku3x3() {
+      const items = themePalettes[sudokuTheme].slice(0, 3).map(i => i.symbol);
+      const perm = [...items].sort(() => Math.random() - 0.5);
       sudokuSolution = [
         [perm[0], perm[1], perm[2]],
         [perm[1], perm[2], perm[0]],
@@ -2024,13 +2432,14 @@
       }
     }
 
-    function generateColorSudoku4x4(singleHole = false) {
-      const colors = ['🔴', '🟡', '🟢', '🔵'].sort(() => Math.random() - 0.5);
+    function generateSudoku4x4(singleHole = false) {
+      const items = themePalettes[sudokuTheme].slice(0, 4).map(i => i.symbol);
+      const s = [...items].sort(() => Math.random() - 0.5);
       sudokuSolution = [
-        [colors[0], colors[1], colors[2], colors[3]],
-        [colors[2], colors[3], colors[0], colors[1]],
-        [colors[1], colors[0], colors[3], colors[2]],
-        [colors[3], colors[2], colors[1], colors[0]]
+        [s[0], s[1], s[2], s[3]],
+        [s[2], s[3], s[0], s[1]],
+        [s[1], s[0], s[3], s[2]],
+        [s[3], s[2], s[1], s[0]]
       ];
       sudokuBoard = sudokuSolution.map(row => [...row]);
 
@@ -2040,7 +2449,8 @@
         sudokuBoard[r][c] = '';
       } else {
         let removed = 0;
-        while (removed < 3) {
+        const targetEmpty = 4;
+        while (removed < targetEmpty) {
           const r = Math.floor(Math.random() * 4);
           const c = Math.floor(Math.random() * 4);
           if (sudokuBoard[r][c] !== '') {
@@ -2055,7 +2465,7 @@
       const grid = document.getElementById('sudoku-grid');
       if (!grid) return;
       grid.innerHTML = '';
-      grid.className = (currentSudokuSize === 3) ? 'grid grid-cols-3 gap-1.5' : 'grid grid-cols-4 gap-1.5';
+      grid.className = (currentSudokuSize === 3) ? 'grid grid-cols-3 gap-2' : 'grid grid-cols-4 gap-2';
 
       for (let r = 0; r < currentSudokuSize; r++) {
         for (let c = 0; c < currentSudokuSize; c++) {
@@ -2063,23 +2473,25 @@
           cell.type = 'button';
           cell.id = `sdk-cell-${r}-${c}`;
           
-          let cellClasses = 'w-11 h-11 sm:w-13 sm:h-13 rounded-xl flex items-center justify-center text-2xl shadow-xs transition btn-3d ';
+          let cellClasses = 'w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm transition btn-3d ';
+          
+          // حاشیه‌بندی ۲×۲ در جدول ۴تایی
           if (currentSudokuSize === 4) {
-            let bStyles = 'border border-sky-300 ';
-            if (r === 1) bStyles += 'border-b-2 border-b-sky-600 ';
-            if (c === 1) bStyles += 'border-l-2 border-l-sky-600 ';
+            let bStyles = 'border-2 border-sky-200 ';
+            if (r === 1) bStyles += 'border-b-4 border-b-sky-600 ';
+            if (c === 1) bStyles += 'border-l-4 border-l-sky-600 ';
             cellClasses += bStyles;
           } else {
-            cellClasses += 'border border-sky-300 ';
+            cellClasses += 'border-2 border-sky-300 ';
           }
 
           const val = sudokuBoard[r][c];
           if (val === '') {
-            cellClasses += 'bg-sky-50 border-dashed border-sky-400 ';
+            cellClasses += 'bg-sky-50/70 border-dashed border-sky-400 hover:bg-sky-100 ';
             cell.innerHTML = '<span class="text-sky-400 text-sm font-black">؟</span>';
             cell.onclick = () => selectSudokuCell(r, c);
           } else {
-            cellClasses += 'bg-white ';
+            cellClasses += 'bg-white text-sky-950 shadow-inner ';
             cell.innerHTML = val;
           }
 
@@ -2102,13 +2514,14 @@
     }
 
     function selectSudokuCell(r, c) {
+      if (sudokuBoard[r][c] !== '') return;
       selectedCell = { r, c };
       document.querySelectorAll('[id^="sdk-cell-"]').forEach(el => {
-        el.classList.remove('ring-3', 'ring-sky-500', 'bg-sky-100');
+        el.classList.remove('ring-4', 'ring-amber-400', 'bg-amber-100', 'scale-105');
       });
       const cellEl = document.getElementById(`sdk-cell-${r}-${c}`);
       if (cellEl) {
-        cellEl.classList.add('ring-3', 'ring-sky-500', 'bg-sky-100');
+        cellEl.classList.add('ring-4', 'ring-amber-400', 'bg-amber-100', 'scale-105');
         playTap();
       }
     }
@@ -2128,11 +2541,11 @@
         if (symbol === correct) {
           playSuccess();
           addStars(2);
-          if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! جدول کامل شد! 🧩</span>';
-          setTimeout(newSudokuGame, 1500);
+          if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین! خانه درست پر شد و جدول کامل شد! 🧩👏</span>';
+          setTimeout(newSudokuGame, 1600);
         } else {
           playWrong();
-          if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">رنگ تکراری است!</span>';
+          if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">این گزینه در سطر یا ستون تکراری است!</span>';
         }
         return;
       }
@@ -2158,75 +2571,26 @@
 
       if (!allFilled) {
         playWrong();
-        if (fb) fb.innerHTML = '<span class="text-amber-700 bg-amber-50 px-3 py-1 rounded-xl">همه‌ی خانه‌های خالی را پر کن!</span>';
+        if (fb) fb.innerHTML = '<span class="text-amber-700 bg-amber-50 px-3 py-1 rounded-xl border border-amber-200">همه‌ی خانه‌های خالی علامت‌دار را پر کن! 🧐</span>';
         return;
       }
 
       if (isCorrect) {
         playSuccess();
         addStars(3);
-        if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! جدول شگفت‌انگیز درست چیده شد! 👏</span>';
+        if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">عالی و بی‌نقص! جدول شگفت‌انگیز را بدون تکرار کامل کردی! 🌟</span>';
         setTimeout(newSudokuGame, 1800);
       } else {
         playWrong();
-        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">چند خانه تکراری دارد؛ دوباره چک کن!</span>';
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">بعضی خانه‌ها در سطر یا ستون خود تکراری دارند؛ دوباره چک کن!</span>';
       }
-    }
-
-    /* ابزارهای معلم */
-    function toggleTeacherModal() {
-      document.getElementById('teacher-modal').classList.toggle('hidden');
-      playTap();
-    }
-
-    function pickStudent() {
-      const names = document.getElementById('student-names').value.split(',').map(s=>s.trim()).filter(Boolean);
-      const box = document.getElementById('picked-name');
-      let count = 0;
-      const t = setInterval(() => {
-        box.innerText = names[Math.floor(Math.random() * names.length)];
-        count++;
-        if (count > 10) {
-          clearInterval(t);
-          playSuccess();
-        }
-      }, 70);
-    }
-
-    let timerId = null;
-    function startTimer(sec) {
-      clearInterval(timerId);
-      let s = sec;
-      const disp = document.getElementById('teacher-timer');
-      timerId = setInterval(() => {
-        s--;
-        const m = Math.floor(s / 60).toString().padStart(2, '0');
-        const remS = (s % 60).toString().padStart(2, '0');
-        disp.innerText = `${m}:${remS}`;
-        if (s <= 0) {
-          clearInterval(timerId);
-          disp.innerText = 'زمان پایان!';
-          playWrong();
-        }
-      }, 1000);
-      playTap();
-    }
-
-    function stopTimer() {
-      clearInterval(timerId);
-      document.getElementById('teacher-timer').innerText = '00:00';
-      playTap();
-    }
-
-    function celebrateClass() {
-      playSuccess();
-      addStars(5);
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
     }
 
     // راه‌اندازی اولیه
     window.addEventListener('DOMContentLoaded', () => {
       newCompareGame();
+      newHouseGame();
+      newClockGame();
       newPatternGame();
       newPureMathGame();
       newCountingGame();
