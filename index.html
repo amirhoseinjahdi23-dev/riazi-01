@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ریاضی‌دان کوچک | کلاس ریاضی آقای جهدی</title>
+  
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ریاضی آقای جهدی">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Persian Font Peyda / Vazirmatn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css">
+  <!-- Tone.js برای افکت صوتی طبیعی -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-display: swap;
+    }
+
+    *, *::before, *::after {
+      font-family: 'Peyda', 'Vazirmatn FD', 'Vazirmatn', system-ui, -apple-system, sans-serif !important;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      direction: rtl;
+    }
+
+    .ltr-force {
+      direction: ltr !important;
+      unicode-bidi: isolate;
+    }
+    .rtl-force {
+      direction: rtl !important;
+      unicode-bidi: isolate;
+    }
+
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.6); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+    }
+    .animate-bounce-slow {
+      animation: bounce-slow 2.2s infinite ease-in-out;
+    }
+    .animate-pop {
+      animation: popIn 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 3px solid rgba(224, 242, 254, 0.9);
+    }
+
+    .btn-3d {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-3d:active {
+      transform: translateY(2px) scale(0.96);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* پالت تم‌های رنگی */
+    body.theme-blue {
+      background: linear-gradient(135deg, #e0f2fe 0%, #eff6ff 50%, #e0e7ff 100%);
+    }
+    body.theme-purple {
+      background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 50%, #e0e7ff 100%);
+    }
+    body.theme-cyan {
+      background: linear-gradient(135deg, #ccfbf1 0%, #e0f2fe 50%, #ecfeff 100%);
+    }
+    body.theme-amber {
+      background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 50%, #ffedd5 100%);
+    }
+    body.theme-emerald {
+      background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 50%, #e0f2fe 100%);
+    }
+
+    .tally-bundle {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      height: 52px;
+      background: #ffffff;
+      border: 2px solid #93c5fd;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(3, 105, 161, 0.08);
+    }
+    .tally-line {
+      width: 5px;
+      height: 38px;
+      background: #0284c7;
+      border-radius: 5px;
+    }
+    .tally-slash {
+      position: absolute;
+      width: 52px;
+      height: 5px;
+      background: #ef4444;
+      top: 23px;
+      right: 2px;
+      transform: rotate(-30deg);
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .tally-single-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      height: 52px;
+      background: #ffffff;
+      border: 2px solid #bae6fd;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body id="app-body" class="theme-blue min-h-screen text-slate-800 flex flex-col text-right selection:bg-sky-200 transition-colors duration-500">
+
+  <!-- هدر صفحه -->
+  <header class="bg-white/95 shadow-sm border-b border-sky-200 w-full relative z-30">
+    <div class="max-w-6xl mx-auto px-3 md:px-5 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 md:gap-3 min-w-0">
+        
+        <!-- دکمه منوی همبرگری شیک بدون متن اضافی -->
+        <button onclick="toggleCategoryDrawer()" class="w-12 h-12 md:w-13 md:h-13 p-1.5 bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white rounded-2xl flex items-center justify-center shadow-md shadow-sky-500/25 btn-3d shrink-0" title="فهرست بخش‌های بازی">
+          <!-- آیکون مداد + خط‌کش + مکعب‌های چینه -->
+          <svg class="w-full h-full drop-shadow-sm" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="35" cy="18" r="2.5" stroke="#1E293B" stroke-width="2" fill="white"/>
+            <circle cx="76" cy="55" r="2.5" stroke="#1E293B" stroke-width="2" fill="white"/>
+            <circle cx="37" cy="88" r="2.5" stroke="#1E293B" stroke-width="2" fill="white"/>
+            <path d="M11 49H17M14 46V52" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M71 18L73 17V24" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="pencil">
+              <path d="M25 24C21.5 24 19 26.5 19 30C19 33.5 21.5 36 25 36H28V24H25Z" fill="#F43F5E" stroke="#1E293B" stroke-width="3"/>
+              <rect x="28" y="24" width="5" height="12" fill="#E2E8F0" stroke="#1E293B" stroke-width="3"/>
+              <rect x="33" y="24" width="35" height="12" fill="#FACC15" stroke="#1E293B" stroke-width="3"/>
+              <path d="M33 28H68" stroke="#EAB308" stroke-width="2"/>
+              <path d="M68 24L81 30L68 36V24Z" fill="#FED7AA" stroke="#1E293B" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M75 27.2L81 30L75 32.8Z" fill="#E11D48"/>
+            </g>
+            <g id="ruler">
+              <rect x="18" y="44" width="64" height="17" rx="5" fill="#38BDF8" stroke="#1E293B" stroke-width="3"/>
+              <path d="M23 44V49M29 44V53M35 44V49M41 44V53M47 44V49M53 44V53M59 44V49M65 44V53M71 44V49M77 44V53" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <g id="cubes">
+              <g transform="translate(18, 65)">
+                <rect x="0" y="4" width="12" height="12" rx="1.5" fill="#EF4444" stroke="#1E293B" stroke-width="2.5"/>
+                <path d="M0 4L4 0H16L12 4H0Z" fill="#F87171" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 4L16 0V12L12 16V4Z" fill="#DC2626" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+              <g transform="translate(34, 65)">
+                <rect x="0" y="4" width="12" height="12" rx="1.5" fill="#22C55E" stroke="#1E293B" stroke-width="2.5"/>
+                <path d="M0 4L4 0H16L12 4H0Z" fill="#4ADE80" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 4L16 0V12L12 16V4Z" fill="#16A34A" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+              <g transform="translate(50, 65)">
+                <rect x="0" y="4" width="12" height="12" rx="1.5" fill="#3B82F6" stroke="#1E293B" stroke-width="2.5"/>
+                <path d="M0 4L4 0H16L12 4H0Z" fill="#60A5FA" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 4L16 0V12L12 16V4Z" fill="#2563EB" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+              <g transform="translate(66, 65)">
+                <rect x="0" y="4" width="12" height="12" rx="1.5" fill="#22C55E" stroke="#1E293B" stroke-width="2.5"/>
+                <path d="M0 4L4 0H16L12 4H0Z" fill="#4ADE80" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 4L16 0V12L12 16V4Z" fill="#EF4444" stroke="#1E293B" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+            </g>
+          </svg>
+        </button>
+
+        <!-- آیکون کانال جدید: حرف A ترکیب مداد + خط‌کش زرد دقیقاً مانند تصویر ارسالی -->
+        <div class="w-12 h-12 md:w-13 md:h-13 bg-white/95 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/15 ring-2 ring-white border border-sky-200 animate-bounce-slow shrink-0 relative p-1 overflow-hidden" title="لوگوی کانال آقای جهدی">
+          <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-leg-left" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38BDF8"/>
+                <stop offset="100%" stop-color="#0284C7"/>
+              </linearGradient>
+              <linearGradient id="grad-leg-right" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#A855F7"/>
+                <stop offset="100%" stop-color="#6366F1"/>
+              </linearGradient>
+              <linearGradient id="grad-ruler" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#FBBF24"/>
+                <stop offset="100%" stop-color="#F59E0B"/>
+              </linearGradient>
+            </defs>
+
+            <!-- المان‌های پس‌زمینه (اشکال هندسی دور آیکون) -->
+            <!-- علامت + نارنجی -->
+            <path d="M18 36H24M21 33V39" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+            <!-- مثلث بنفش بالا چپ -->
+            <path d="M30 25L34 32H26Z" fill="#3B82F6"/>
+            <!-- دایره بنفش بالا راست -->
+            <circle cx="68" cy="27" r="3.5" fill="#8B5CF6" stroke="#1E1B4B" stroke-width="1.5"/>
+            <!-- علامت مساوی بالا راست -->
+            <path d="M72 36H80M72 40H80" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- مثلث کوچک پایین چپ -->
+            <path d="M19 63L23 58L24 64Z" fill="#6366F1"/>
+            <!-- دایره کوچک پایین راست -->
+            <circle cx="81" cy="63" r="3" fill="#38BDF8" stroke="#1E1B4B" stroke-width="1.5"/>
+            <!-- علامت مساوی پایین وسط -->
+            <path d="M47 77H54M47 81H54" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
+
+            <!-- حرف A بزرگ -->
+            <!-- پایه سمت راست (بنفش) -->
+            <path d="M50 18C52 18 55 20 57 24L77 66C79 70 76 74 71 74C68 74 65 72 64 69L56 50L45 28C47 21 49 18 50 18Z" fill="url(#grad-leg-right)" stroke="#1E1B4B" stroke-width="3" stroke-linejoin="round"/>
+
+            <!-- پایه سمت چپ با انتهای مداد تراش‌خورده و نوک سرمه‌ای -->
+            <path d="M50 18C47 18 45 20 42 24L29 55L26 64H39L46 47L50 18Z" fill="url(#grad-leg-left)" stroke="#1E1B4B" stroke-width="3" stroke-linejoin="round"/>
+            <!-- تراش چوبی مداد در انتهای پایه چپ -->
+            <path d="M26 64L32 77L39 64H26Z" fill="#FED7AA" stroke="#1E1B4B" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- نوک سربی مداد -->
+            <path d="M29.5 72L32 77L34.5 72Z" fill="#1E1B4B"/>
+
+            <!-- خط اتصال درونی A -->
+            <path d="M37 57H60" stroke="#1E1B4B" stroke-width="2"/>
+
+            <!-- خط‌کش افقی در میانه A (زرد/نارنجی) -->
+            <rect x="15" y="44" width="70" height="12" rx="4" fill="url(#grad-ruler)" stroke="#1E1B4B" stroke-width="2.8"/>
+            <!-- درجه‌بندی خط‌کش -->
+            <path d="M21 44V49M26 44V51M31 44V49M36 44V51M41 44V49M46 44V51M51 44V49M56 44V51M61 44V49M66 44V51M71 44V49M76 44V51M81 44V49" stroke="#1E1B4B" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="min-w-0">
+          <h1 class="text-xs sm:text-sm md:text-base font-black text-sky-950 truncate flex items-center gap-1">
+            <span>ریاضی‌دان کوچک</span>
+            <span class="text-[10px] sm:text-xs text-sky-600 font-bold hidden sm:inline">| پایه اول دبستان</span>
+          </h1>
+          <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+            <span class="text-[10px] sm:text-[11px] text-sky-800 font-black bg-sky-100 border border-sky-300 px-2 py-0.5 rounded-md shrink-0 flex items-center gap-1">
+              <i class="fa-solid fa-chalkboard-user text-[10px] text-sky-600"></i>
+              <span>کلاس آقای جهدی</span>
+            </span>
+            <span id="current-section-badge" class="bg-indigo-50 text-indigo-800 border border-indigo-200 px-2 py-0.5 rounded-md text-[10px] md:text-[11px] font-black truncate max-w-[120px] sm:max-w-none">تمساح شکمو</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
+        <!-- ستاره‌ها -->
+        <div class="bg-sky-50 border border-sky-200 px-2.5 md:px-3 py-1 rounded-2xl flex items-center gap-1.5 shadow-sm">
+          <span class="text-base md:text-xl">⭐</span>
+          <span id="global-stars" class="font-black text-sky-900 text-xs md:text-base">۰</span>
+        </div>
+
+        <!-- دکمه تغییر تم رنگی برنامه با پاپ‌اور رنگ‌ها -->
+        <div class="relative">
+          <button onclick="toggleThemeDropdown()" class="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-tr from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-2xl flex items-center justify-center shadow btn-3d" title="تغییر تم رنگی برنامه">
+            <i class="fa-solid fa-palette text-xs md:text-sm"></i>
+          </button>
+          
+          <!-- دراپ‌داون پالت رنگ‌ها -->
+          <div id="theme-dropdown" class="hidden absolute left-0 mt-2 bg-white rounded-2xl p-2.5 shadow-xl border border-sky-200 z-50 flex gap-1.5 animate-pop">
+            <button onclick="applyAppTheme('theme-blue')" class="w-7 h-7 rounded-full bg-sky-500 border-2 border-white shadow hover:scale-110 transition" title="آبی"></button>
+            <button onclick="applyAppTheme('theme-purple')" class="w-7 h-7 rounded-full bg-purple-500 border-2 border-white shadow hover:scale-110 transition" title="بنفش"></button>
+            <button onclick="applyAppTheme('theme-cyan')" class="w-7 h-7 rounded-full bg-teal-500 border-2 border-white shadow hover:scale-110 transition" title="فیروزه‌ای"></button>
+            <button onclick="applyAppTheme('theme-amber')" class="w-7 h-7 rounded-full bg-amber-500 border-2 border-white shadow hover:scale-110 transition" title="نارنجی"></button>
+            <button onclick="applyAppTheme('theme-emerald')" class="w-7 h-7 rounded-full bg-emerald-500 border-2 border-white shadow hover:scale-110 transition" title="سبز"></button>
+          </div>
+        </div>
+
+        <!-- میز کار معلم -->
+        <button onclick="toggleTeacherModal()" class="w-9 h-9 md:w-10 md:h-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl flex items-center justify-center shadow btn-3d" title="میز کار آقای جهدی">
+          <i class="fa-solid fa-chalkboard-user text-xs md:text-sm"></i>
+        </button>
+
+        <!-- وضعیت صدا -->
+        <button onclick="toggleSoundMute()" id="btn-sound-toggle" class="w-9 h-9 md:w-10 md:h-10 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-2xl flex items-center justify-center shadow-sm btn-3d" title="صدا">
+          <i class="fa-solid fa-volume-high text-xs md:text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- منوی کشویی سایدبار (Drawer) -->
+  <div id="category-drawer-backdrop" onclick="toggleCategoryDrawer()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+  <aside id="category-drawer" class="fixed top-0 right-0 h-full w-72 max-w-[85vw] bg-white z-50 shadow-2xl flex flex-col p-4 border-l-4 border-sky-500 transform translate-x-full transition-transform duration-300 ease-out">
+    <div class="flex items-center justify-between pb-3 border-b border-sky-100">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">📘</span>
+        <h3 class="font-black text-sky-950 text-base">فهرست بخش‌های ریاضی</h3>
+      </div>
+      <button onclick="toggleCategoryDrawer()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-rose-100 hover:text-rose-600 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto py-3 space-y-2 no-scrollbar" id="drawer-items-list">
+      <button onclick="selectDrawerTab('compare', 'تمساح شکمو')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-black text-sm flex items-center gap-3 bg-sky-600 text-white shadow" data-tab="compare">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-scale-balanced"></i></span>
+        <span>۱. تمساح شکمو (شمارش ماهی‌ها)</span>
+      </button>
+
+      <button onclick="selectDrawerTab('patterns', 'قطار الگوها')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="patterns">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-train"></i></span>
+        <span>۲. قطار الگوها و هسته تکرار</span>
+      </button>
+
+      <button onclick="selectDrawerTab('pure-math', 'جمع و تفریق ساده')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="pure-math">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-bolt"></i></span>
+        <span>۳. جمع و تفریق ساده (ذهنی)</span>
+      </button>
+
+      <button onclick="selectDrawerTab('counting', 'شمارش و اشیاء')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="counting">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-calculator"></i></span>
+        <span>۴. لمس و شمارش اشیاء</span>
+      </button>
+
+      <button onclick="selectDrawerTab('animal-farm', 'مزرعه حیوانات')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="animal-farm">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-paw"></i></span>
+        <span>۵. مزرعه حیوانات</span>
+      </button>
+
+      <button onclick="selectDrawerTab('axis', 'قورباغه روی محور')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="axis">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-road"></i></span>
+        <span>۶. قورباغه روی محور اعداد</span>
+      </button>
+
+      <button onclick="selectDrawerTab('tally', 'چوب‌خط و دسته‌بندی')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="tally">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-bars-staggered"></i></span>
+        <span>۷. چوب‌خط ۵ تایی</span>
+      </button>
+
+      <button onclick="selectDrawerTab('sudoku', 'جدول شگفت‌انگیز')" class="drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50" data-tab="sudoku">
+        <span class="text-xl w-6 text-center"><i class="fa-solid fa-puzzle-piece"></i></span>
+        <span>۸. جدول شگفت‌انگیز</span>
+      </button>
+    </div>
+
+    <div class="pt-3 border-t border-sky-100 text-center text-xs text-sky-800 font-bold">
+      کلاس درس آقای جهدی 🌟
+    </div>
+  </aside>
+
+  <!-- بستر ماژول‌های ریاضی -->
+  <main class="flex-grow max-w-5xl w-full mx-auto p-3 md:p-6 flex flex-col justify-center">
+
+    <!-- ۱. بخش تمساح شکمو با شمارش لمسی ماهی‌ها و بدون عدد قبلی -->
+    <section id="section-compare" class="tab-panel block">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-base sm:text-xl font-black text-sky-950 flex items-center gap-2">
+              <span>تمساح شکمو کدام دسته را می‌خورد؟</span>
+              <span class="text-2xl animate-bounce-slow">🐊</span>
+            </h2>
+            <p class="text-[11px] text-sky-700 font-bold mt-0.5">ماهی‌های هر طرف را با انگشتت لمس کن تا شمرده شوند؛ سپس انتخاب کن تمساح کدام طرف را می‌خورد!</p>
+          </div>
+          <div class="flex gap-1 bg-sky-100 p-1 rounded-xl text-xs font-bold shrink-0">
+            <button onclick="setCompareDifficulty('easy')" id="comp-diff-easy" class="px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">تا ۱۰</button>
+            <button onclick="setCompareDifficulty('medium')" id="comp-diff-medium" class="px-2.5 py-1 rounded-lg text-sky-900">تا ۲۰</button>
+            <button onclick="setCompareDifficulty('hard')" id="comp-diff-hard" class="px-2.5 py-1 rounded-lg text-sky-900">تا ۳۰</button>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-b from-sky-50 to-blue-50/70 rounded-2xl p-3 border border-sky-200 flex flex-col sm:flex-row items-stretch justify-between gap-3 shadow-inner">
+          
+          <!-- استخر ماهی راست -->
+          <div class="flex-1 flex flex-col items-center justify-between bg-white/90 p-3 rounded-2xl border-2 border-sky-200 shadow-xs relative">
+            <div class="flex items-center justify-between w-full mb-1.5 border-b border-sky-100 pb-1.5">
+              <span class="text-[11px] font-black text-sky-800 bg-sky-100 px-2 py-0.5 rounded-lg">استخر راست 👉</span>
+              <span class="text-xs font-black text-sky-900 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-sky-200">
+                شمرده شده: <b id="comp-right-tapped" class="text-sky-700 text-sm">۰</b>
+              </span>
+            </div>
+            
+            <!-- ناحیه لمس ماهی‌ها -->
+            <div id="comp-right-icons" class="flex flex-wrap justify-center items-center gap-2 min-h-[120px] max-h-[170px] overflow-y-auto p-2 bg-sky-50/50 rounded-xl w-full no-scrollbar"></div>
+            
+            <!-- باکس عدد مخفی تا پایان شمارش و پاسخ -->
+            <div id="comp-right-reveal" class="h-8 flex items-center justify-center my-1">
+              <span id="comp-right-num" class="hidden text-xl font-black text-white bg-sky-600 px-4 py-0.5 rounded-xl shadow-xs">؟</span>
+              <span id="comp-right-hint" class="text-[11px] font-bold text-sky-600 animate-pulse">روی تک‌تک ماهی‌ها بزن 👆</span>
+            </div>
+
+            <button onclick="checkCompareDirect('right')" class="w-full mt-1 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-black py-2.5 px-3 rounded-xl text-xs sm:text-sm shadow-md shadow-sky-500/20 btn-3d flex items-center justify-center gap-1.5">
+              <span>راست بیشتره</span>
+              <i class="fa-solid fa-fish"></i>
+            </button>
+          </div>
+
+          <!-- باکس میانی دهان تمساح و دکمه مساوی -->
+          <div class="flex flex-row sm:flex-col items-center justify-center shrink-0 gap-2.5 py-1">
+            <div id="comp-alligator-anim" class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl border-2 border-dashed border-sky-300 flex flex-col items-center justify-center text-3xl sm:text-4xl shadow-sm transition-all duration-300">
+              <span id="comp-alligator-icon">🐊</span>
+            </div>
+
+            <button onclick="checkCompareDirect('equal')" class="flex-grow sm:flex-grow-0 bg-white hover:bg-sky-100 border-2 border-sky-300 text-sky-950 font-black py-2.5 px-3.5 rounded-xl text-xs sm:text-sm shadow-xs btn-3d">
+              هر دو مساویند 🟰
+            </button>
+
+            <button onclick="newCompareGame()" class="bg-sky-100 text-sky-700 hover:bg-sky-200 p-2 rounded-xl text-xs font-bold btn-3d" title="سوال بعدی">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+
+          <!-- استخر ماهی چپ -->
+          <div class="flex-1 flex flex-col items-center justify-between bg-white/90 p-3 rounded-2xl border-2 border-sky-200 shadow-xs relative">
+            <div class="flex items-center justify-between w-full mb-1.5 border-b border-sky-100 pb-1.5">
+              <span class="text-[11px] font-black text-sky-800 bg-sky-100 px-2 py-0.5 rounded-lg">👈 استخر چپ</span>
+              <span class="text-xs font-black text-sky-900 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-sky-200">
+                شمرده شده: <b id="comp-left-tapped" class="text-sky-700 text-sm">۰</b>
+              </span>
+            </div>
+            
+            <!-- ناحیه لمس ماهی‌ها -->
+            <div id="comp-left-icons" class="flex flex-wrap justify-center items-center gap-2 min-h-[120px] max-h-[170px] overflow-y-auto p-2 bg-sky-50/50 rounded-xl w-full no-scrollbar"></div>
+            
+            <!-- باکس عدد مخفی تا پایان شمارش و پاسخ -->
+            <div id="comp-left-reveal" class="h-8 flex items-center justify-center my-1">
+              <span id="comp-left-num" class="hidden text-xl font-black text-white bg-sky-600 px-4 py-0.5 rounded-xl shadow-xs">؟</span>
+              <span id="comp-left-hint" class="text-[11px] font-bold text-sky-600 animate-pulse">روی تک‌تک ماهی‌ها بزن 👆</span>
+            </div>
+
+            <button onclick="checkCompareDirect('left')" class="w-full mt-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black py-2.5 px-3 rounded-xl text-xs sm:text-sm shadow-md shadow-blue-500/20 btn-3d flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-fish"></i>
+              <span>چپ بیشتره</span>
+            </button>
+          </div>
+
+        </div>
+
+        <div id="compare-feedback" class="h-8 text-center font-black text-sm sm:text-base mt-2 flex items-center justify-center"></div>
+      </div>
+    </section>
+
+    <!-- ۲. قطار الگوها + بخش کشف هسته و بخش تکرارشونده -->
+    <section id="section-patterns" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        
+        <!-- سوئیچ بین حالت تکمیل قطار و حالت کشف بخش تکرار شونده -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <h2 class="text-base sm:text-xl font-black text-sky-950">قطار الگوها و نظم اشکال 🚂</h2>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5">
+            <!-- سوئیچ مود بازی -->
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setPatternMode('next')" id="pat-mode-next" class="px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">واگن بعدی</button>
+              <button onclick="setPatternMode('unit')" id="pat-mode-unit" class="px-2.5 py-1 rounded-lg text-sky-900 font-bold">بخش تکرارشونده 🔁</button>
+            </div>
+
+            <!-- سطح دشواری (با الگوهای طولانی و سخت) -->
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setPatternDifficulty('easy')" id="pattern-diff-easy" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">آسان</button>
+              <button onclick="setPatternDifficulty('medium')" id="pattern-diff-medium" class="px-2 py-1 rounded-lg text-sky-900">متوسط</button>
+              <button onclick="setPatternDifficulty('hard')" id="pattern-diff-hard" class="px-2 py-1 rounded-lg text-sky-900">طولانی و سخت 🔥</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- محوطه قطار واگن‌ها -->
+        <div class="bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 rounded-2xl p-4 border border-sky-200 overflow-x-auto no-scrollbar shadow-inner">
+          <div class="text-[11px] font-bold text-sky-700 mb-2 flex items-center justify-between">
+            <span id="pattern-instruction">الگوی واگن‌ها را دنبال کن:</span>
+            <span class="text-[10px] bg-white px-2 py-0.5 rounded-md border border-sky-200 text-sky-800">قطار ریاضی</span>
+          </div>
+          <div class="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 min-w-[340px] py-1" id="pattern-train-cars"></div>
+        </div>
+
+        <!-- باکس پاسخ برای حالت ۱: انتخاب واگن بعدی -->
+        <div id="pat-box-next-view" class="block mt-4">
+          <div class="text-center text-xs font-black text-slate-700 mb-2">واگن علامت سوال (؟) کدام شکل است؟</div>
+          <div class="flex flex-wrap justify-center gap-2.5 max-w-md mx-auto" id="pattern-choices-box"></div>
+        </div>
+
+        <!-- باکس پاسخ برای حالت ۲: انتخاب بخش تکرارشونده (هسته الگو) -->
+        <div id="pat-box-unit-view" class="hidden mt-4">
+          <div class="text-center text-xs font-black text-sky-900 mb-2">کدام بسته، «بخش تکرارشونده» این الگو است؟ 🔍</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-lg mx-auto" id="pattern-unit-choices-box"></div>
+        </div>
+
+        <div id="pattern-feedback" class="h-8 text-center font-black text-sm mt-2 flex items-center justify-center"></div>
+      </div>
+    </section>
+
+    <!-- ۳. بخش جدید: جمع و تفریق ساده ذهنی (بدون شکل) ۱۰، ۲۰، ۳۰، ۴۰ -->
+    <section id="section-pure-math" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-base sm:text-xl font-black text-sky-950 flex items-center gap-2">
+              <span>جمع و تفریق ساده (محاسبه ذهنی بدون شکل)</span>
+              <span class="text-xl">⚡</span>
+            </h2>
+            <p class="text-[11px] text-sky-700 font-bold mt-0.5">در ذهن خودت حساب کن و پاسخ درست را انتخاب کن.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5">
+            <!-- محدوده تا 10، 20، 30، 40 -->
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setPureRange(10)" id="pure-rng-10" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۱۰</button>
+              <button onclick="setPureRange(20)" id="pure-rng-20" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">تا ۲۰</button>
+              <button onclick="setPureRange(30)" id="pure-rng-30" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۳۰</button>
+              <button onclick="setPureRange(40)" id="pure-rng-40" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تا ۴۰</button>
+            </div>
+
+            <!-- نوع عملگر: جمع / تفریق / مخلوط -->
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setPureOp('both')" id="pure-op-both" class="px-2 py-1 rounded-lg bg-indigo-600 text-white font-black shadow-xs">ترکیبی</button>
+              <button onclick="setPureOp('add')" id="pure-op-add" class="px-2 py-1 rounded-lg text-sky-900 font-bold">جمع (+)</button>
+              <button onclick="setPureOp('sub')" id="pure-op-sub" class="px-2 py-1 rounded-lg text-sky-900 font-bold">تفریق (-)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- کارت نمایش معادله کاملاً متنی بدون شکل -->
+        <div class="bg-gradient-to-r from-sky-50 via-white to-blue-50 rounded-2xl p-6 border-2 border-sky-300 shadow-sm flex flex-col items-center justify-center my-3">
+          <div class="flex items-center justify-center gap-3 sm:gap-6 ltr-force text-4xl sm:text-6xl font-black text-sky-950 font-sans select-none" dir="ltr">
+            <span id="pure-num1" class="bg-sky-100/90 text-sky-900 px-4 py-2 rounded-2xl border border-sky-300 shadow-inner">۱۲</span>
+            <span id="pure-sign" class="text-sky-600 font-sans">+</span>
+            <span id="pure-num2" class="bg-sky-100/90 text-sky-900 px-4 py-2 rounded-2xl border border-sky-300 shadow-inner">۵</span>
+            <span class="text-slate-400">=</span>
+            <span class="w-16 h-16 sm:w-20 sm:h-20 bg-amber-200/90 border-2 border-dashed border-amber-500 rounded-2xl flex items-center justify-center text-amber-900 font-black text-3xl sm:text-4xl shadow-sm">؟</span>
+          </div>
+
+          <div class="mt-4 flex items-center gap-2">
+            <span class="text-xs text-sky-700 font-bold">فکر کن، حساب کن و بزن روی جواب:</span>
+            <button onclick="newPureMathGame()" class="text-sky-600 hover:text-sky-800 text-xs font-bold px-2 py-1 bg-white border border-sky-200 rounded-lg btn-3d">
+              <i class="fa-solid fa-arrows-rotate ml-1"></i>سوال دیگر
+            </button>
+          </div>
+        </div>
+
+        <!-- دکمه‌های گزینه‌ها -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-md mx-auto mt-2" id="pure-options-grid"></div>
+        <div id="pure-feedback" class="h-8 text-center font-black text-sm sm:text-base mt-2 flex items-center justify-center"></div>
+      </div>
+    </section>
+
+    <!-- ۴. شمارش لمسی اشیاء -->
+    <section id="section-counting" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col gap-2 mb-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base sm:text-xl font-black text-sky-950">اشیاء را لمس کن و بشمار! 🎈</h2>
+            <div class="flex gap-1 bg-sky-100 p-1 rounded-xl text-xs font-bold shrink-0">
+              <button onclick="setCountingRange(10)" id="count-range-10" class="px-2 py-1 rounded-lg text-sky-900">۱۰</button>
+              <button onclick="setCountingRange(20)" id="count-range-20" class="px-2 py-1 rounded-lg text-sky-900">۲۰</button>
+              <button onclick="setCountingRange(30)" id="count-range-30" class="px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs">۳۰</button>
+            </div>
+          </div>
+          <p class="text-[11px] text-sky-700 font-bold">هر شکل را لمس کن تا شمرده شود، سپس پاسخ درست را انتخاب کن.</p>
+        </div>
+
+        <div class="bg-sky-50/70 rounded-xl p-3 border border-sky-200 min-h-[170px] max-h-[250px] overflow-y-auto flex flex-wrap items-center justify-center gap-2 no-scrollbar" id="counting-items-area"></div>
+
+        <div class="mt-3 flex items-center justify-between gap-2 bg-white p-2 rounded-xl border border-sky-200">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-bold text-slate-600">شمرده شده:</span>
+            <span id="counted-so-far" class="text-lg font-black text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-lg border border-sky-200">۰</span>
+          </div>
+
+          <button onclick="newCountingGame()" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-xs btn-3d">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span>بعدی</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-4 gap-2 mt-3" id="counting-options-box"></div>
+        <div id="counting-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+      </div>
+    </section>
+
+    <!-- ۵. مزرعه حیوانات -->
+    <section id="section-animal-farm" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <h2 class="text-base sm:text-xl font-black text-sky-950">مزرعه شاد حیوانات! 🦁</h2>
+          <button onclick="newAnimalFarmGame()" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-xs btn-3d">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span>مزرعه جدید</span>
+          </button>
+        </div>
+
+        <div class="bg-sky-100/80 rounded-xl p-2.5 border border-sky-300 flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div id="target-animal-icon" class="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-3xl shadow-xs border border-sky-200">🐰</div>
+            <div>
+              <div class="text-[10px] font-bold text-sky-800">حیوان مورد نظر:</div>
+              <div id="target-animal-name" class="text-xs sm:text-sm font-black text-sky-950">فقط خرگوش‌ها را بشمار!</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 bg-white px-2 py-1 rounded-xl shadow-xs border border-sky-200">
+            <span class="text-[10px] font-bold text-slate-500">پیدا شده:</span>
+            <span id="farm-tapped-count" class="text-base font-black text-sky-700">۰</span>
+          </div>
+        </div>
+
+        <div class="bg-sky-50/50 rounded-xl p-2.5 border border-dashed border-sky-300 min-h-[170px] max-h-[250px] overflow-y-auto flex flex-wrap items-center justify-center gap-2 no-scrollbar" id="animal-farm-area"></div>
+
+        <div class="text-center text-[11px] font-black text-slate-600 mt-2.5 mb-1.5">چند تا از این حیوان در مزرعه هست؟</div>
+        <div class="grid grid-cols-4 gap-2" id="animal-farm-options"></div>
+        <div id="animal-farm-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+      </div>
+    </section>
+
+    <!-- ۶. قورباغه روی محور -->
+    <section id="section-axis" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
+          <h2 class="text-base sm:text-xl font-black text-sky-950">قورباغه روی محور اعداد 🐸</h2>
+          <div class="flex flex-wrap items-center gap-1.5 w-full sm:w-auto justify-between">
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setAxisOp('both')" id="axis-op-both" class="px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs">ترکیبی</button>
+              <button onclick="setAxisOp('add')" id="axis-op-add" class="px-2 py-0.5 rounded-lg text-sky-900 font-bold">جمع (+)</button>
+              <button onclick="setAxisOp('sub')" id="axis-op-sub" class="px-2 py-0.5 rounded-lg text-sky-900 font-bold">تفریق (-)</button>
+            </div>
+            <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="setAxisRange(10)" id="axis-range-10" class="px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs">تا ۱۰</button>
+              <button onclick="setAxisRange(20)" id="axis-range-20" class="px-2 py-0.5 rounded-lg text-sky-900">تا ۲۰</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-sky-50/80 rounded-xl p-3 border border-sky-200 my-2 overflow-x-auto ltr-force no-scrollbar" dir="ltr">
+          <div class="relative min-w-[500px] h-28 flex flex-col justify-end pb-2 select-none px-3">
+            <div class="relative w-full h-12">
+              <div id="frog-avatar" class="absolute bottom-0.5 transition-all duration-500 text-3xl flex items-center justify-center pointer-events-none" style="left: 0%; transform: translateX(-50%) scaleX(1);">🐸</div>
+            </div>
+            <div class="w-full h-2.5 bg-sky-700 rounded-full relative mb-1">
+              <div id="axis-ticks" class="w-full h-full relative"></div>
+            </div>
+            <div id="axis-numbers-labels" class="w-full relative h-6 text-sky-950 font-black text-xs"></div>
+          </div>
+        </div>
+
+        <div class="p-2.5 bg-white rounded-xl border border-sky-200 mb-2.5 shadow-xs flex items-center justify-between gap-2">
+          <div id="axis-question-text" class="text-xs sm:text-sm font-black text-sky-900 leading-snug">مسئله در حال بارگذاری...</div>
+          <button onclick="newAxisGame()" class="bg-sky-100 text-sky-900 font-bold px-2.5 py-1 rounded-lg text-xs shrink-0 btn-3d"><i class="fa-solid fa-arrows-rotate"></i></button>
+        </div>
+
+        <div class="text-center text-[11px] font-black text-slate-600 mb-1.5">عدد نهایی را لمس کن:</div>
+        <div class="grid grid-cols-6 sm:grid-cols-11 gap-1" id="axis-numbers-grid"></div>
+        <div id="axis-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+      </div>
+    </section>
+
+    <!-- ۷. چوب‌خط و دسته‌بندی -->
+    <section id="section-tally" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h2 class="text-base sm:text-xl font-black text-sky-950">چوب‌خط ۵ تایی 🥖</h2>
+          <div class="flex gap-1 bg-sky-100 p-1 rounded-xl text-xs font-bold">
+            <button onclick="setTallyMode('quiz')" id="tally-btn-quiz" class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-600 text-white shadow-xs">مسابقه</button>
+            <button onclick="setTallyMode('sandbox')" id="tally-btn-sandbox" class="px-2.5 py-1 rounded-lg text-xs font-black text-sky-900">کارگاه 🖐️</button>
+          </div>
+        </div>
+
+        <div id="tally-quiz-area" class="block">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-[11px] font-bold text-slate-500">محدوده:</span>
+            <div class="flex gap-1 bg-sky-100 p-0.5 rounded-lg text-xs font-bold">
+              <button onclick="setTallyQuizRange(10)" id="tally-range-10" class="px-2 py-0.5 rounded text-sky-900">۱۰</button>
+              <button onclick="setTallyQuizRange(20)" id="tally-range-20" class="px-2 py-0.5 rounded text-sky-900">۲۰</button>
+              <button onclick="setTallyQuizRange(30)" id="tally-range-30" class="px-2 py-0.5 rounded bg-sky-600 text-white font-black shadow-xs">۳۰</button>
+            </div>
+          </div>
+
+          <div class="bg-sky-50 rounded-xl p-4 border border-sky-200 flex flex-col items-center justify-center">
+            <div class="text-[11px] font-bold text-slate-500 mb-0.5">عدد هدف:</div>
+            <div id="tally-target-num" class="text-4xl sm:text-5xl font-black text-sky-600 bg-white px-6 py-1.5 rounded-xl shadow-inner border border-sky-200">۱۴</div>
+            <div id="tally-helper-text" class="text-[11px] font-bold text-sky-800 mt-1.5 bg-sky-200/50 px-2 py-0.5 rounded-lg">راهنما</div>
+          </div>
+
+          <div class="text-center text-[11px] font-black text-slate-600 mt-3 mb-2">چوب‌خط درست را انتخاب کن:</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="tally-choices-box"></div>
+        </div>
+
+        <div id="tally-sandbox-area" class="hidden">
+          <div class="bg-white rounded-xl p-3 border border-sky-300 text-center">
+            <div class="flex items-center justify-between bg-sky-50 p-2 rounded-xl border border-sky-200 mb-2">
+              <span class="text-xs font-bold text-sky-800">برای این عدد چوب‌خط بکش:</span>
+              <div class="flex items-center gap-1.5">
+                <span id="sandbox-target-display" class="text-2xl font-black text-sky-600 bg-white px-3 py-0.5 rounded-lg border border-sky-300">۱۸</span>
+                <button onclick="newSandboxChallenge()" class="w-7 h-7 bg-sky-100 hover:bg-sky-200 text-sky-700 rounded-lg flex items-center justify-center btn-3d"><i class="fa-solid fa-arrows-rotate text-xs"></i></button>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center gap-1.5 my-2">
+              <button onclick="addSandboxTally()" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-3 py-2 rounded-xl text-xs shadow-xs btn-3d flex items-center gap-1">
+                <i class="fa-solid fa-plus"></i><span>یکی بکش</span>
+              </button>
+              <button onclick="removeSandboxTally()" class="bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold px-2.5 py-2 rounded-xl text-xs btn-3d flex items-center gap-1">
+                <i class="fa-solid fa-minus"></i><span>کم کن</span>
+              </button>
+              <button onclick="resetSandboxTally()" class="bg-slate-100 text-slate-600 font-bold px-2 py-2 rounded-xl text-xs btn-3d">از اول</button>
+              <button onclick="checkSandboxTally()" class="bg-blue-600 hover:bg-blue-700 text-white font-black px-3.5 py-2 rounded-xl text-xs shadow-xs btn-3d flex items-center gap-1">
+                <i class="fa-solid fa-check"></i><span>بررسی</span>
+              </button>
+            </div>
+
+            <div id="sandbox-tally-display" class="min-h-[85px] bg-sky-50/50 p-2.5 rounded-xl border border-dashed border-sky-200 flex flex-wrap items-center justify-center gap-2"></div>
+          </div>
+        </div>
+
+        <div id="tally-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+      </div>
+    </section>
+
+    <!-- ۸. جدول شگفت‌انگیز -->
+    <section id="section-sudoku" class="tab-panel hidden">
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-md border-2 border-sky-200">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h2 class="text-base sm:text-xl font-black text-sky-950">جدول شگفت‌انگیز 🧩</h2>
+          <div class="flex gap-0.5 bg-sky-100 p-0.5 rounded-xl text-xs font-bold shrink-0">
+            <button onclick="setSudokuLevel('easy')" id="sudoku-lvl-easy" class="px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs">۳×۳</button>
+            <button onclick="setSudokuLevel('medium')" id="sudoku-lvl-medium" class="px-2 py-0.5 rounded-lg text-sky-900">۴×۴ تک</button>
+            <button onclick="setSudokuLevel('hard')" id="sudoku-lvl-hard" class="px-2 py-0.5 rounded-lg text-sky-900">۴×۴ کامل</button>
+          </div>
+        </div>
+
+        <div class="flex justify-center mb-3">
+          <div id="sudoku-grid-wrapper" class="bg-white p-2.5 rounded-2xl border-2 border-sky-400 shadow-sm relative inline-block">
+            <div id="sudoku-grid" class="grid gap-1.5"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <span class="text-[11px] font-bold text-slate-500 mb-1.5">خانه خالی را بزن، سپس رنگ یا شکل بگذار:</span>
+          <div class="flex flex-wrap justify-center gap-2" id="sudoku-palette-box"></div>
+
+          <div class="flex items-center gap-2 mt-3" id="sudoku-action-buttons">
+            <button onclick="checkFullSudoku()" id="sudoku-check-btn" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-4 py-2 rounded-xl text-xs shadow-xs btn-3d flex items-center gap-1">
+              <i class="fa-solid fa-check"></i>
+              <span>بررسی جدول</span>
+            </button>
+            <button onclick="newSudokuGame()" class="bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold px-3 py-2 rounded-xl text-xs btn-3d flex items-center gap-1">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>جدول بعدی</span>
+            </button>
+          </div>
+        </div>
+        <div id="sudoku-feedback" class="h-7 text-center font-black text-sm mt-1.5"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- فوتر برنامه -->
+  <footer class="mt-auto py-2.5 text-center text-[11px] text-sky-800 font-bold bg-white/80 border-t border-sky-200">
+    طراحی شده برای یادگیری لذت‌بخش ریاضی پایه اول 💙 کلاس درس آقای جهدی
+  </footer>
+
+  <!-- مودال ابزار کلاسی معلم -->
+  <div id="teacher-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-4 shadow-xl border-3 border-sky-400">
+      <div class="flex justify-between items-center mb-3 pb-2 border-b border-sky-100">
+        <h3 class="font-black text-sky-950 text-sm flex items-center gap-1.5">
+          <i class="fa-solid fa-chalkboard-user text-sky-600"></i>
+          <span>میز کار کلاسی آقای جهدی</span>
+        </h3>
+        <button onclick="toggleTeacherModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-rose-100"><i class="fa-solid fa-xmark text-sm"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="bg-sky-50 p-2.5 rounded-xl border border-sky-200">
+          <div class="text-[11px] font-black text-sky-900 mb-1">قرعه‌کشی پای تخته 🎯</div>
+          <input id="student-names" type="text" value="علی, محمد, پارسا, سارا, فاطمه, حسین, امیررضا, زهرا, کیان, باران, طاها" class="w-full p-1.5 text-xs rounded-lg border border-sky-300 mb-1.5 outline-none font-bold" placeholder="اسامی">
+          <div class="flex gap-1.5">
+            <button onclick="pickStudent()" class="bg-sky-600 hover:bg-sky-700 text-white px-2.5 py-1 rounded-lg text-xs font-black shadow-xs btn-3d">قرعه‌کشی</button>
+            <div id="picked-name" class="flex-grow bg-white rounded-lg border border-sky-200 text-center font-black text-sky-800 text-xs flex items-center justify-center">...</div>
+          </div>
+        </div>
+
+        <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-200 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] font-black text-blue-900">تایمر حل مسئله</div>
+            <div id="teacher-timer" class="text-xl font-black text-blue-700 font-mono">01:00</div>
+          </div>
+          <div class="flex gap-1">
+            <button onclick="startTimer(60)" class="bg-sky-600 text-white px-2 py-1 rounded-lg text-[11px] font-bold btn-3d">۱ دقیقه</button>
+            <button onclick="startTimer(30)" class="bg-sky-600 text-white px-2 py-1 rounded-lg text-[11px] font-bold btn-3d">۳۰ ثانیه</button>
+            <button onclick="stopTimer()" class="bg-rose-100 text-rose-700 px-2 py-1 rounded-lg text-[11px] font-bold btn-3d">توقف</button>
+          </div>
+        </div>
+
+        <button onclick="celebrateClass()" class="w-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md btn-3d flex items-center justify-center gap-1.5">
+          <span>بارش ستاره و تشویق کل کلاس 🌟</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================
+       ۰. مدیریت تب‌ها، تم و سیستم صوتی
+       ======================================================== */
+    let globalStars = 0;
+    let isSoundMuted = false;
+    let isDrawerOpen = false;
+
+    // تغییر تم رنگی
+    function toggleThemeDropdown() {
+      const dd = document.getElementById('theme-dropdown');
+      if (dd) dd.classList.toggle('hidden');
+      playTap();
+    }
+
+    function applyAppTheme(themeClass) {
+      const body = document.getElementById('app-body');
+      if (!body) return;
+      body.className = `${themeClass} min-h-screen text-slate-800 flex flex-col text-right selection:bg-sky-200 transition-colors duration-500`;
+      const dd = document.getElementById('theme-dropdown');
+      if (dd) dd.classList.add('hidden');
+      playSuccess();
+    }
+
+    function toggleCategoryDrawer() {
+      const drawer = document.getElementById('category-drawer');
+      const backdrop = document.getElementById('category-drawer-backdrop');
+      if (!drawer || !backdrop) return;
+      isDrawerOpen = !isDrawerOpen;
+      if (isDrawerOpen) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+      playTap();
+    }
+
+    function selectDrawerTab(tabId, titleText) {
+      switchTab(tabId, titleText);
+      toggleCategoryDrawer();
+    }
+
+    function addStars(num) {
+      globalStars += num;
+      const el = document.getElementById('global-stars');
+      if (el) el.innerText = globalStars.toLocaleString('fa-IR');
+    }
+
+    function switchTab(tabId, titleText) {
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+        panel.classList.remove('block');
+      });
+      const targetPanel = document.getElementById(`section-${tabId}`);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+        targetPanel.classList.add('block');
+      }
+
+      if (titleText) {
+        const badge = document.getElementById('current-section-badge');
+        if (badge) badge.innerText = titleText;
+      }
+
+      document.querySelectorAll('.drawer-nav-item').forEach(item => {
+        if (item.dataset.tab === tabId) {
+          item.className = 'drawer-nav-item w-full text-right p-3 rounded-2xl font-black text-sm flex items-center gap-3 bg-sky-600 text-white shadow';
+        } else {
+          item.className = 'drawer-nav-item w-full text-right p-3 rounded-2xl font-bold text-sm flex items-center gap-3 bg-slate-50 text-slate-700 hover:bg-sky-50';
+        }
+      });
+
+      playTap();
+    }
+
+    let tapSynth = null;
+    let bellSynth = null;
+
+    function initAudio() {
+      try {
+        if (!tapSynth && window.Tone) {
+          tapSynth = new Tone.MembraneSynth({
+            pitchDecay: 0.05,
+            octaves: 2,
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.001, decay: 0.2, sustain: 0.01, release: 0.2 }
+          }).toDestination();
+          tapSynth.volume.value = -12;
+
+          bellSynth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'triangle' },
+            envelope: { attack: 0.02, decay: 0.3, sustain: 0.2, release: 0.8 }
+          }).toDestination();
+          bellSynth.volume.value = -8;
+        }
+      } catch (e) {}
+    }
+
+    function playTap() {
+      if (isSoundMuted) return;
+      try {
+        initAudio();
+        if (Tone.context.state !== 'running') Tone.start();
+        if (tapSynth) tapSynth.triggerAttackRelease('C3', '16n');
+      } catch (e) {}
+    }
+
+    function playSuccess() {
+      if (isSoundMuted) return;
+      try {
+        initAudio();
+        if (Tone.context.state !== 'running') Tone.start();
+        if (bellSynth) {
+          const now = Tone.now();
+          bellSynth.triggerAttackRelease('C5', '8n', now);
+          bellSynth.triggerAttackRelease('E5', '8n', now + 0.1);
+          bellSynth.triggerAttackRelease('G5', '8n', now + 0.2);
+          bellSynth.triggerAttackRelease('C6', '4n', now + 0.3);
+        }
+        if (window.confetti) confetti({ particleCount: 45, spread: 55, origin: { y: 0.7 } });
+      } catch (e) {}
+    }
+
+    function playWrong() {
+      if (isSoundMuted) return;
+      try {
+        initAudio();
+        if (Tone.context.state !== 'running') Tone.start();
+        if (bellSynth) {
+          const now = Tone.now();
+          bellSynth.triggerAttackRelease('D4', '8n', now);
+          bellSynth.triggerAttackRelease('C#4', '4n', now + 0.14);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSoundMute() {
+      isSoundMuted = !isSoundMuted;
+      const icon = document.querySelector('#btn-sound-toggle i');
+      if (isSoundMuted) {
+        icon.className = 'fa-solid fa-volume-xmark text-rose-500 text-xs md:text-sm';
+      } else {
+        icon.className = 'fa-solid fa-volume-high text-sky-800 text-xs md:text-sm';
+        playTap();
+      }
+    }
+
+    /* ==========================================================
+       ۱. تمساح شکمو: بدون نوشتن تعداد، شمارش لمسی ماهی‌ها
+       ======================================================== */
+    let compDifficulty = 'easy';
+    let compRightCount = 4;
+    let compLeftCount = 7;
+    let compRightTapped = 0;
+    let compLeftTapped = 0;
+
+    function setCompareDifficulty(diff) {
+      compDifficulty = diff;
+      ['easy', 'medium', 'hard'].forEach(d => {
+        const btn = document.getElementById(`comp-diff-${d}`);
+        if (btn) {
+          btn.className = (d === diff)
+            ? 'px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2.5 py-1 rounded-lg text-sky-900';
+        }
+      });
+      playTap();
+      newCompareGame();
+    }
+
+    function newCompareGame() {
+      const fb = document.getElementById('compare-feedback');
+      const rBox = document.getElementById('comp-right-icons');
+      const lBox = document.getElementById('comp-left-icons');
+      const rNum = document.getElementById('comp-right-num');
+      const lNum = document.getElementById('comp-left-num');
+      const rHint = document.getElementById('comp-right-hint');
+      const lHint = document.getElementById('comp-left-hint');
+      const animIcon = document.getElementById('comp-alligator-icon');
+      const rTappedDisp = document.getElementById('comp-right-tapped');
+      const lTappedDisp = document.getElementById('comp-left-tapped');
+      if (!rBox || !lBox) return;
+
+      if (fb) fb.innerText = '';
+      if (animIcon) animIcon.innerText = '🐊';
+
+      // پنهان کردن اعداد تا زمانی که پاسخ ثبت شود
+      if (rNum) { rNum.classList.add('hidden'); rNum.innerText = ''; }
+      if (lNum) { lNum.classList.add('hidden'); lNum.innerText = ''; }
+      if (rHint) rHint.classList.remove('hidden');
+      if (lHint) lHint.classList.remove('hidden');
+
+      compRightTapped = 0;
+      compLeftTapped = 0;
+      if (rTappedDisp) rTappedDisp.innerText = '۰';
+      if (lTappedDisp) lTappedDisp.innerText = '۰';
+
+      let maxN = 10;
+      if (compDifficulty === 'medium') maxN = 20;
+      if (compDifficulty === 'hard') maxN = 30;
+      const minN = (compDifficulty === 'easy') ? 2 : 5;
+
+      const willEqual = Math.random() < 0.12;
+      compRightCount = Math.floor(Math.random() * (maxN - minN + 1)) + minN;
+
+      if (willEqual) {
+        compLeftCount = compRightCount;
+      } else {
+        do {
+          compLeftCount = Math.floor(Math.random() * (maxN - minN + 1)) + minN;
+        } while (compLeftCount === compRightCount);
+      }
+
+      // ایجاد ماهی‌های استخر راست
+      rBox.innerHTML = '';
+      for (let i = 0; i < compRightCount; i++) {
+        const fish = document.createElement('button');
+        fish.type = 'button';
+        fish.className = 'w-10 h-10 sm:w-11 sm:h-11 bg-white hover:bg-sky-100 rounded-xl border border-sky-300 text-xl sm:text-2xl flex items-center justify-center shadow-xs transition-transform active:scale-90 btn-3d';
+        fish.innerText = '🐟';
+        fish.dataset.counted = 'false';
+        fish.onclick = () => tapCompareFish(fish, 'right');
+        rBox.appendChild(fish);
+      }
+
+      // ایجاد ماهی‌های استخر چپ
+      lBox.innerHTML = '';
+      for (let i = 0; i < compLeftCount; i++) {
+        const fish = document.createElement('button');
+        fish.type = 'button';
+        fish.className = 'w-10 h-10 sm:w-11 sm:h-11 bg-white hover:bg-sky-100 rounded-xl border border-sky-300 text-xl sm:text-2xl flex items-center justify-center shadow-xs transition-transform active:scale-90 btn-3d';
+        fish.innerText = '🐠';
+        fish.dataset.counted = 'false';
+        fish.onclick = () => tapCompareFish(fish, 'left');
+        lBox.appendChild(fish);
+      }
+    }
+
+    function tapCompareFish(btn, side) {
+      if (btn.dataset.counted === 'false') {
+        btn.dataset.counted = 'true';
+        btn.classList.add('ring-3', 'ring-sky-500', 'bg-sky-200', 'scale-105');
+        if (side === 'right') {
+          compRightTapped++;
+          const d = document.getElementById('comp-right-tapped');
+          if (d) d.innerText = compRightTapped.toLocaleString('fa-IR');
+        } else {
+          compLeftTapped++;
+          const d = document.getElementById('comp-left-tapped');
+          if (d) d.innerText = compLeftTapped.toLocaleString('fa-IR');
+        }
+        playTap();
+      }
+    }
+
+    function checkCompareDirect(chosenSide) {
+      const fb = document.getElementById('compare-feedback');
+      const rNum = document.getElementById('comp-right-num');
+      const lNum = document.getElementById('comp-left-num');
+      const rHint = document.getElementById('comp-right-hint');
+      const lHint = document.getElementById('comp-left-hint');
+      const animIcon = document.getElementById('comp-alligator-icon');
+
+      let correctSide = 'equal';
+      if (compRightCount > compLeftCount) correctSide = 'right';
+      if (compLeftCount > compRightCount) correctSide = 'left';
+
+      // نمایش تعداد دقیق ماهی‌ها پس از ثبت پاسخ
+      if (rNum) {
+        rNum.innerText = `${compRightCount.toLocaleString('fa-IR')} ماهی`;
+        rNum.classList.remove('hidden');
+      }
+      if (lNum) {
+        lNum.innerText = `${compLeftCount.toLocaleString('fa-IR')} ماهی`;
+        lNum.classList.remove('hidden');
+      }
+      if (rHint) rHint.classList.add('hidden');
+      if (lHint) lHint.classList.add('hidden');
+
+      if (chosenSide === correctSide) {
+        playSuccess();
+        addStars(2);
+
+        if (correctSide === 'right') animIcon.innerText = '👉';
+        else if (correctSide === 'left') animIcon.innerText = '👈';
+        else animIcon.innerText = '🟰';
+
+        if (fb) fb.innerHTML = `<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین تمساح شکمو غذایش را پیدا کرد! (راست: ${compRightCount.toLocaleString('fa-IR')} و چپ: ${compLeftCount.toLocaleString('fa-IR')}) 👏🐊</span>`;
+        setTimeout(newCompareGame, 2200);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">دوباره بشمار! تمساح طرفی را می‌خورد که ماهی بیشتری دارد.</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۲. قطار الگوها: الگوهای سخت‌تر + بخش تشخیص تکرارشونده
+       ======================================================== */
+    let patternDifficulty = 'easy';
+    let patternMode = 'next'; // 'next' یا 'unit'
+    let currentPatternTarget = '';
+    let currentPatternUnit = [];
+    const shapeChoicesPool = ['🔺', '🟢', '🟦', '🟠', '🟡', '🟪', '⭐', '🌙', '🔴', '🔷', '💎', '🌸'];
+
+    function setPatternMode(mode) {
+      patternMode = mode;
+      const bNext = document.getElementById('pat-mode-next');
+      const bUnit = document.getElementById('pat-mode-unit');
+      const boxNext = document.getElementById('pat-box-next-view');
+      const boxUnit = document.getElementById('pat-box-unit-view');
+      const instr = document.getElementById('pattern-instruction');
+
+      if (mode === 'next') {
+        bNext.className = 'px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs';
+        bUnit.className = 'px-2.5 py-1 rounded-lg text-sky-900 font-bold';
+        boxNext.classList.remove('hidden');
+        boxUnit.classList.add('hidden');
+        if (instr) instr.innerText = 'الگوی واگن‌ها را دنبال کن:';
+      } else {
+        bUnit.className = 'px-2.5 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs';
+        bNext.className = 'px-2.5 py-1 rounded-lg text-sky-900 font-bold';
+        boxUnit.classList.remove('hidden');
+        boxNext.classList.add('hidden');
+        if (instr) instr.innerText = 'بخش تکرارشونده (هسته) این زنجیره را پیدا کن:';
+      }
+      playTap();
+      newPatternGame();
+    }
+
+    function setPatternDifficulty(diff) {
+      patternDifficulty = diff;
+      ['easy', 'medium', 'hard'].forEach(d => {
+        const btn = document.getElementById(`pattern-diff-${d}`);
+        if (btn) {
+          btn.className = (d === diff)
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900';
+        }
+      });
+      playTap();
+      newPatternGame();
+    }
+
+    function newPatternGame() {
+      const carsBox = document.getElementById('pattern-train-cars');
+      const choicesBox = document.getElementById('pattern-choices-box');
+      const unitChoicesBox = document.getElementById('pattern-unit-choices-box');
+      const fb = document.getElementById('pattern-feedback');
+      if (!carsBox) return;
+
+      if (fb) fb.innerText = '';
+      carsBox.innerHTML = '';
+      if (choicesBox) choicesBox.innerHTML = '';
+      if (unitChoicesBox) unitChoicesBox.innerHTML = '';
+
+      let baseSequence = [];
+      if (patternDifficulty === 'easy') {
+        const pool = [
+          ['🔴', '🟡'],
+          ['🔺', '🔷'],
+          ['⭐', '🌙'],
+          ['🟢', '🟠']
+        ];
+        baseSequence = pool[Math.floor(Math.random() * pool.length)];
+      } else if (patternDifficulty === 'medium') {
+        const pool = [
+          ['🔺', '🔺', '🟢'],
+          ['🟦', '🟠', '🔺'],
+          ['🔴', '🔴', '🟡', '🟡'],
+          ['⭐', '🔷', '🔷']
+        ];
+        baseSequence = pool[Math.floor(Math.random() * pool.length)];
+      } else {
+        // الگوهای طولانی و سخت‌تر
+        const pool = [
+          ['🟦', '🟦', '🔺', '🟡'],
+          ['🟠', '🔺', '🔺', '🟪'],
+          ['🔴', '🟢', '🔷', '🟡'],
+          ['⭐', '⭐', '🌙', '⭐'],
+          ['💎', '🌸', '🌸', '💎']
+        ];
+        baseSequence = pool[Math.floor(Math.random() * pool.length)];
+      }
+
+      currentPatternUnit = [...baseSequence];
+
+      // ساخت زنجیره طویل واگن‌ها متناسب با سختی
+      const totalTrainLength = (patternDifficulty === 'hard') ? 10 : (patternDifficulty === 'medium' ? 8 : 6);
+      const fullTrain = [];
+      while (fullTrain.length < totalTrainLength + 2) {
+        fullTrain.push(...baseSequence);
+      }
+
+      if (patternMode === 'next') {
+        // حالت ۱: واگن علامت سوال در انتها
+        const displayCars = fullTrain.slice(0, totalTrainLength - 1);
+        currentPatternTarget = fullTrain[totalTrainLength - 1];
+
+        displayCars.forEach(icon => {
+          const c = document.createElement('div');
+          c.className = 'w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center text-xl sm:text-2xl shadow-xs border border-sky-300 shrink-0';
+          c.innerText = icon;
+          carsBox.appendChild(c);
+        });
+
+        const qCar = document.createElement('div');
+        qCar.className = 'w-10 h-10 sm:w-12 sm:h-12 bg-sky-200 rounded-xl border-2 border-dashed border-sky-600 flex items-center justify-center text-lg font-black text-sky-900 shrink-0 animate-pulse';
+        qCar.innerText = '؟';
+        carsBox.appendChild(qCar);
+
+        const options = [currentPatternTarget];
+        while (options.length < 4) {
+          const randS = shapeChoicesPool[Math.floor(Math.random() * shapeChoicesPool.length)];
+          if (!options.includes(randS)) options.push(randS);
+        }
+        options.sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+          const b = document.createElement('button');
+          b.className = 'w-12 h-12 text-2xl bg-white hover:bg-sky-50 border-2 border-sky-300 rounded-2xl shadow-xs active:scale-95 transition flex items-center justify-center btn-3d';
+          b.innerText = opt;
+          b.onclick = () => checkPatternCar(opt);
+          choicesBox.appendChild(b);
+        });
+
+      } else {
+        // حالت ۲: تشخیص بخش تکرارشونده
+        const displayCars = fullTrain.slice(0, totalTrainLength);
+        displayCars.forEach(icon => {
+          const c = document.createElement('div');
+          c.className = 'w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center text-xl sm:text-2xl shadow-xs border border-sky-300 shrink-0';
+          c.innerText = icon;
+          carsBox.appendChild(c);
+        });
+
+        // تولید بسته‌های گزینه برای هسته تکرار
+        const correctStr = currentPatternUnit.join(' ');
+        const optionsList = [currentPatternUnit];
+
+        while (optionsList.length < 3) {
+          const randUnit = [...currentPatternUnit].sort(() => Math.random() - 0.5);
+          const randStr = randUnit.join(' ');
+          const exists = optionsList.some(o => o.join(' ') === randStr);
+          if (!exists) {
+            optionsList.push(randUnit);
+          } else {
+            // ساخت گزینه ساختگی دیگر
+            const fakeUnit = [shapeChoicesPool[Math.floor(Math.random() * 5)], shapeChoicesPool[Math.floor(Math.random() * 5)]];
+            optionsList.push(fakeUnit);
+          }
+        }
+        optionsList.sort(() => Math.random() - 0.5);
+
+        optionsList.forEach(unit => {
+          const b = document.createElement('button');
+          b.className = 'bg-white hover:bg-sky-50 border-2 border-sky-300 rounded-2xl p-2.5 flex items-center justify-center gap-1.5 shadow-xs text-xl active:scale-95 transition btn-3d';
+          b.innerHTML = unit.map(u => `<span class="bg-sky-100 p-1 rounded-lg border border-sky-200">${u}</span>`).join('');
+          b.onclick = () => checkPatternUnit(unit);
+          unitChoicesBox.appendChild(b);
+        });
+      }
+    }
+
+    function checkPatternCar(selected) {
+      const fb = document.getElementById('pattern-feedback');
+      if (selected === currentPatternTarget) {
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = '<span class="text-sky-900 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین! قطار راه افتاد و واگن درست بود 🚂👏</span>';
+        setTimeout(newPatternGame, 1500);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">دوباره از اول قطار با دقت نگاه کن!</span>';
+      }
+    }
+
+    function checkPatternUnit(selectedUnit) {
+      const fb = document.getElementById('pattern-feedback');
+      const isCorrect = (selectedUnit.join(' ') === currentPatternUnit.join(' '));
+      if (isCorrect) {
+        playSuccess();
+        addStars(3);
+        if (fb) fb.innerHTML = '<span class="text-sky-900 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">آفرین! بخش تکرار شونده را درست تشخیص دادی 🔁🌟</span>';
+        setTimeout(newPatternGame, 1600);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">این بخش تکرار نمی‌شود، دوباره امتحان کن!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۳. بخش جدید: جمع و تفریق ساده ذهنی (بدون شکل) ۱۰، ۲۰، ۳۰، ۴۰
+       ======================================================== */
+    let pureRange = 20;
+    let pureOpMode = 'both';
+    let pureAns = 0;
+
+    function setPureRange(rng) {
+      pureRange = rng;
+      [10, 20, 30, 40].forEach(r => {
+        const b = document.getElementById(`pure-rng-${r}`);
+        if (b) {
+          b.className = (r === rng)
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      playTap();
+      newPureMathGame();
+    }
+
+    function setPureOp(op) {
+      pureOpMode = op;
+      ['both', 'add', 'sub'].forEach(o => {
+        const b = document.getElementById(`pure-op-${o}`);
+        if (b) {
+          b.className = (o === op)
+            ? 'px-2 py-1 rounded-lg bg-indigo-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      playTap();
+      newPureMathGame();
+    }
+
+    function newPureMathGame() {
+      const n1El = document.getElementById('pure-num1');
+      const n2El = document.getElementById('pure-num2');
+      const signEl = document.getElementById('pure-sign');
+      const grid = document.getElementById('pure-options-grid');
+      const fb = document.getElementById('pure-feedback');
+      if (!n1El || !n2El || !grid) return;
+
+      if (fb) fb.innerText = '';
+      grid.innerHTML = '';
+
+      let isAdd = true;
+      if (pureOpMode === 'both') {
+        isAdd = Math.random() < 0.55;
+      } else {
+        isAdd = (pureOpMode === 'add');
+      }
+
+      let n1 = 0, n2 = 0;
+      if (isAdd) {
+        if (signEl) signEl.innerText = '+';
+        const half = Math.floor(pureRange / 2);
+        n1 = Math.floor(Math.random() * (pureRange - 3)) + 1;
+        const maxAdd = pureRange - n1;
+        n2 = Math.floor(Math.random() * maxAdd) + 1;
+        pureAns = n1 + n2;
+      } else {
+        if (signEl) signEl.innerText = '-';
+        n1 = Math.floor(Math.random() * (pureRange - 2)) + 2;
+        n2 = Math.floor(Math.random() * (n1 - 1)) + 1;
+        pureAns = n1 - n2;
+      }
+
+      if (n1El) n1El.innerText = n1.toLocaleString('fa-IR');
+      if (n2El) n2El.innerText = n2.toLocaleString('fa-IR');
+
+      const options = [pureAns];
+      while (options.length < 4) {
+        const delta = Math.floor(Math.random() * 9) - 4;
+        const fake = pureAns + delta;
+        if (fake >= 0 && fake <= pureRange && !options.includes(fake)) {
+          options.push(fake);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'bg-white hover:bg-sky-50 border-2 border-sky-300 text-sky-950 font-black py-3 sm:py-4 rounded-2xl text-2xl sm:text-3xl shadow-sm active:scale-95 transition btn-3d';
+        b.innerText = opt.toLocaleString('fa-IR');
+        b.onclick = () => checkPureMathAnswer(opt);
+        grid.appendChild(b);
+      });
+    }
+
+    function checkPureMathAnswer(selected) {
+      const fb = document.getElementById('pure-feedback');
+      if (selected === pureAns) {
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = '<span class="text-sky-900 bg-sky-100 px-3 py-1 rounded-xl border border-sky-300">درست گفتی! آفرین به ذهن سریعت ⚡👏</span>';
+        setTimeout(newPureMathGame, 1400);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">دوباره در ذهنت حساب کن!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۴. ماژول شمارش اشیاء
+       ======================================================== */
+    let countRange = 30;
+    let targetCount = 0;
+    let currentTappedCount = 0;
+    const countItemsIcons = ['🎈', '🍎', '⭐', '🚗', '🍓', '🧁', '⚽', '🍬', '🐥', '🧸'];
+
+    function setCountingRange(rng) {
+      countRange = rng;
+      [10, 20, 30].forEach(r => {
+        const btn = document.getElementById(`count-range-${r}`);
+        if (btn) {
+          btn.className = (r === rng)
+            ? 'px-2 py-1 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-1 rounded-lg text-sky-900';
+        }
+      });
+      playTap();
+      newCountingGame();
+    }
+
+    function newCountingGame() {
+      const area = document.getElementById('counting-items-area');
+      const optBox = document.getElementById('counting-options-box');
+      const countDisp = document.getElementById('counted-so-far');
+      const fb = document.getElementById('counting-feedback');
+      if (!area || !optBox) return;
+
+      area.innerHTML = '';
+      optBox.innerHTML = '';
+      if (fb) fb.innerText = '';
+      currentTappedCount = 0;
+      if (countDisp) countDisp.innerText = '۰';
+
+      const minVal = (countRange === 10) ? 2 : (countRange === 20 ? 8 : 12);
+      targetCount = Math.floor(Math.random() * (countRange - minVal + 1)) + minVal;
+      const icon = countItemsIcons[Math.floor(Math.random() * countItemsIcons.length)];
+
+      for (let i = 1; i <= targetCount; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center text-xl sm:text-2xl shadow-xs border border-sky-200 transition-all select-none btn-3d';
+        btn.innerHTML = icon;
+        btn.dataset.counted = 'false';
+
+        btn.onclick = () => {
+          if (btn.dataset.counted === 'false') {
+            btn.dataset.counted = 'true';
+            btn.classList.add('ring-3', 'ring-sky-500', 'bg-sky-100', 'scale-105');
+            currentTappedCount++;
+            if (countDisp) countDisp.innerText = currentTappedCount.toLocaleString('fa-IR');
+            playTap();
+          }
+        };
+        area.appendChild(btn);
+      }
+
+      const options = [targetCount];
+      while (options.length < 4) {
+        const delta = Math.floor(Math.random() * 7) - 3;
+        const fake = targetCount + delta;
+        if (fake >= 1 && fake <= countRange && !options.includes(fake)) {
+          options.push(fake);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'bg-white hover:bg-sky-100 border border-sky-300 rounded-xl py-2.5 text-lg sm:text-xl font-black text-sky-900 shadow-xs active:scale-95 transition btn-3d';
+        b.innerText = opt.toLocaleString('fa-IR');
+        b.onclick = () => selectCountingOption(opt);
+        optBox.appendChild(b);
+      });
+    }
+
+    function selectCountingOption(selected) {
+      const fb = document.getElementById('counting-feedback');
+      if (selected === targetCount) {
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! درست شمردی 👏🎈</span>';
+        setTimeout(newCountingGame, 1500);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">دوباره با دقت با انگشتت بشمار!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۵. مزرعه حیوانات
+       ======================================================== */
+    const farmAnimals = [
+      { id: 'rabbit', icon: '🐰', name: 'خرگوش‌ها' },
+      { id: 'chick', icon: '🐥', name: 'جوجه‌ها' },
+      { id: 'frog', icon: '🐸', name: 'قورباغه‌ها' },
+      { id: 'cat', icon: '🐱', name: 'گربه‌ها' },
+      { id: 'bear', icon: '🐻', name: 'خرس‌ها' },
+      { id: 'duck', icon: '🦆', name: 'اردک‌ها' }
+    ];
+    let targetAnimal = null;
+    let targetAnimalCount = 0;
+    let farmTappedCount = 0;
+
+    function newAnimalFarmGame() {
+      const area = document.getElementById('animal-farm-area');
+      const optBox = document.getElementById('animal-farm-options');
+      const fb = document.getElementById('animal-farm-feedback');
+      const tapDisp = document.getElementById('farm-tapped-count');
+      const targetIconEl = document.getElementById('target-animal-icon');
+      const targetNameEl = document.getElementById('target-animal-name');
+      if (!area || !optBox) return;
+
+      area.innerHTML = '';
+      optBox.innerHTML = '';
+      if (fb) fb.innerText = '';
+      farmTappedCount = 0;
+      if (tapDisp) tapDisp.innerText = '۰';
+
+      targetAnimal = farmAnimals[Math.floor(Math.random() * farmAnimals.length)];
+      if (targetIconEl) targetIconEl.innerText = targetAnimal.icon;
+      if (targetNameEl) targetNameEl.innerText = `فقط ${targetAnimal.name} را بشمار!`;
+
+      targetAnimalCount = Math.floor(Math.random() * 8) + 3;
+      const otherAnimals = farmAnimals.filter(a => a.id !== targetAnimal.id);
+
+      const allFarmItems = [];
+      for (let i = 0; i < targetAnimalCount; i++) {
+        allFarmItems.push({ ...targetAnimal, isTarget: true });
+      }
+
+      const totalDistractors = Math.floor(Math.random() * 7) + 5;
+      for (let i = 0; i < totalDistractors; i++) {
+        const randOther = otherAnimals[Math.floor(Math.random() * otherAnimals.length)];
+        allFarmItems.push({ ...randOther, isTarget: false });
+      }
+
+      allFarmItems.sort(() => Math.random() - 0.5);
+
+      allFarmItems.forEach(item => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center text-2xl shadow-xs border border-sky-200 transition-all active:scale-90 btn-3d';
+        b.innerHTML = item.icon;
+        b.dataset.tapped = 'false';
+
+        b.onclick = () => handleAnimalTap(b, item);
+        area.appendChild(b);
+      });
+
+      const options = [targetAnimalCount];
+      while (options.length < 4) {
+        const fake = targetAnimalCount + (Math.floor(Math.random() * 7) - 3);
+        if (fake >= 1 && fake <= 15 && !options.includes(fake)) {
+          options.push(fake);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const ob = document.createElement('button');
+        ob.className = 'bg-white hover:bg-sky-100 border border-sky-300 rounded-xl py-2.5 text-lg sm:text-xl font-black text-sky-900 shadow-xs active:scale-95 transition btn-3d';
+        ob.innerText = opt.toLocaleString('fa-IR');
+        ob.onclick = () => checkAnimalAnswer(opt);
+        optBox.appendChild(ob);
+      });
+    }
+
+    function handleAnimalTap(btn, item) {
+      if (btn.dataset.tapped === 'true') return;
+      if (item.isTarget) {
+        btn.dataset.tapped = 'true';
+        btn.classList.add('ring-3', 'ring-sky-500', 'bg-sky-100', 'scale-105');
+        farmTappedCount++;
+        const tapDisp = document.getElementById('farm-tapped-count');
+        if (tapDisp) tapDisp.innerText = farmTappedCount.toLocaleString('fa-IR');
+        playTap();
+      } else {
+        btn.classList.add('bg-rose-100');
+        playWrong();
+        setTimeout(() => btn.classList.remove('bg-rose-100'), 400);
+      }
+    }
+
+    function checkAnimalAnswer(selected) {
+      const fb = document.getElementById('animal-farm-feedback');
+      if (selected === targetAnimalCount) {
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = `<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">فوق‌العاده بود! ${targetAnimalCount.toLocaleString('fa-IR')} تا ${targetAnimal.name} پیدا کردی! 🎉</span>`;
+        setTimeout(newAnimalFarmGame, 1500);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">تعداد درست نیست؛ دوباره بشمار!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۶. قورباغه روی محور اعداد
+       ======================================================== */
+    let axisRange = 10;
+    let axisOpType = 'both';
+    let currentAxisStart = 0;
+    let currentAxisStep = 0;
+    let currentAxisFinal = 0;
+    let currentAxisIsAdd = true;
+
+    function setAxisRange(rng) {
+      axisRange = rng;
+      [10, 20].forEach(r => {
+        const btn = document.getElementById(`axis-range-${r}`);
+        if (btn) {
+          btn.className = (r === rng)
+            ? 'px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-0.5 rounded-lg text-sky-900';
+        }
+      });
+      buildAxisUI();
+      newAxisGame();
+      playTap();
+    }
+
+    function setAxisOp(op) {
+      axisOpType = op;
+      ['both', 'add', 'sub'].forEach(o => {
+        const btn = document.getElementById(`axis-op-${o}`);
+        if (btn) {
+          btn.className = (o === op)
+            ? 'px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-0.5 rounded-lg text-sky-900 font-bold';
+        }
+      });
+      newAxisGame();
+      playTap();
+    }
+
+    function buildAxisUI() {
+      const ticks = document.getElementById('axis-ticks');
+      const labels = document.getElementById('axis-numbers-labels');
+      const grid = document.getElementById('axis-numbers-grid');
+      if (!ticks || !labels || !grid) return;
+
+      ticks.innerHTML = '';
+      labels.innerHTML = '';
+      grid.innerHTML = '';
+
+      for (let i = 0; i <= axisRange; i++) {
+        const pct = (i / axisRange) * 100;
+        const tick = document.createElement('div');
+        tick.className = 'absolute top-0 w-0.5 h-2.5 bg-white';
+        tick.style.left = `${pct}%`;
+        ticks.appendChild(tick);
+
+        const lbl = document.createElement('div');
+        lbl.className = 'absolute text-center transform -translate-x-1/2';
+        lbl.style.left = `${pct}%`;
+        lbl.innerText = i.toLocaleString('fa-IR');
+        labels.appendChild(lbl);
+
+        const b = document.createElement('button');
+        b.className = 'bg-white hover:bg-sky-100 border border-sky-300 rounded-lg py-1.5 text-xs sm:text-sm font-black text-sky-950 shadow-xs active:scale-90 transition btn-3d';
+        b.innerText = i.toLocaleString('fa-IR');
+        b.onclick = () => checkAxisNumber(i);
+        grid.appendChild(b);
+      }
+    }
+
+    function moveFrogTo(num, isForward = true) {
+      const frog = document.getElementById('frog-avatar');
+      if (!frog) return;
+      const pct = (num / axisRange) * 100;
+      frog.style.left = `${pct}%`;
+      frog.style.transform = isForward ? 'translateX(-50%) scaleX(1)' : 'translateX(-50%) scaleX(-1)';
+    }
+
+    function newAxisGame() {
+      const fb = document.getElementById('axis-feedback');
+      const qText = document.getElementById('axis-question-text');
+      if (fb) fb.innerText = '';
+
+      if (axisOpType === 'both') {
+        currentAxisIsAdd = Math.random() < 0.55;
+      } else {
+        currentAxisIsAdd = (axisOpType === 'add');
+      }
+
+      if (currentAxisIsAdd) {
+        currentAxisStart = Math.floor(Math.random() * (axisRange - 3)) + 1;
+        const maxStep = axisRange - currentAxisStart;
+        currentAxisStep = Math.floor(Math.random() * Math.min(maxStep, 6)) + 1;
+        currentAxisFinal = currentAxisStart + currentAxisStep;
+
+        if (qText) {
+          qText.innerText = `قورباغه روی عدد ${currentAxisStart.toLocaleString('fa-IR')} است؛ ${currentAxisStep.toLocaleString('fa-IR')} تا جلو می‌پرد!`;
+        }
+        moveFrogTo(currentAxisStart, true);
+      } else {
+        currentAxisStart = Math.floor(Math.random() * (axisRange - 4)) + 4;
+        currentAxisStep = Math.floor(Math.random() * (currentAxisStart - 1)) + 1;
+        currentAxisFinal = currentAxisStart - currentAxisStep;
+
+        if (qText) {
+          qText.innerText = `قورباغه روی عدد ${currentAxisStart.toLocaleString('fa-IR')} است؛ ${currentAxisStep.toLocaleString('fa-IR')} تا عقب برمی‌گردد!`;
+        }
+        moveFrogTo(currentAxisStart, false);
+      }
+    }
+
+    function checkAxisNumber(selected) {
+      const fb = document.getElementById('axis-feedback');
+      if (selected === currentAxisFinal) {
+        moveFrogTo(currentAxisFinal, currentAxisIsAdd);
+        playSuccess();
+        addStars(2);
+        if (fb) fb.innerHTML = `<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! روی عدد ${currentAxisFinal.toLocaleString('fa-IR')} نشست 🐸</span>`;
+        setTimeout(newAxisGame, 1600);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">قدم‌ها را با دقت بشمار!</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۷. چوب‌خط
+       ======================================================== */
+    let tallyMode = 'quiz';
+    let tallyQuizRange = 30;
+    let tallyTargetNum = 14;
+    let sandboxUserCount = 0;
+    let sandboxTargetNum = 18;
+
+    function setTallyMode(mode) {
+      tallyMode = mode;
+      const quizArea = document.getElementById('tally-quiz-area');
+      const sandArea = document.getElementById('tally-sandbox-area');
+      const btnQ = document.getElementById('tally-btn-quiz');
+      const btnS = document.getElementById('tally-btn-sandbox');
+      const fb = document.getElementById('tally-feedback');
+      if (fb) fb.innerText = '';
+
+      if (mode === 'quiz') {
+        if (quizArea) quizArea.style.display = 'block';
+        if (sandArea) sandArea.style.display = 'none';
+        if (btnQ) btnQ.className = 'px-2.5 py-1 rounded-lg text-xs font-black bg-sky-600 text-white shadow-xs';
+        if (btnS) btnS.className = 'px-2.5 py-1 rounded-lg text-xs font-black text-sky-900';
+        newTallyGame();
+      } else {
+        if (quizArea) quizArea.style.display = 'none';
+        if (sandArea) sandArea.style.display = 'block';
+        if (btnS) btnS.className = 'px-2.5 py-1 rounded-lg text-xs font-black bg-sky-600 text-white shadow-xs';
+        if (btnQ) btnQ.className = 'px-2.5 py-1 rounded-lg text-xs font-black text-sky-900';
+        newSandboxChallenge();
+      }
+      playTap();
+    }
+
+    function setTallyQuizRange(rng) {
+      tallyQuizRange = rng;
+      [10, 20, 30].forEach(r => {
+        const btn = document.getElementById(`tally-range-${r}`);
+        if (btn) {
+          btn.className = (r === rng)
+            ? 'px-2 py-0.5 rounded bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-0.5 rounded text-sky-900';
+        }
+      });
+      playTap();
+      newTallyGame();
+    }
+
+    function generateTallyHTML(num) {
+      const bundles = Math.floor(num / 5);
+      const remainder = num % 5;
+      let html = '<div class="flex flex-wrap items-center justify-center gap-1.5">';
+
+      for (let b = 0; b < bundles; b++) {
+        html += `
+          <div class="tally-bundle">
+            <div class="tally-line"></div>
+            <div class="tally-line"></div>
+            <div class="tally-line"></div>
+            <div class="tally-line"></div>
+            <div class="tally-slash"></div>
+          </div>
+        `;
+      }
+
+      if (remainder > 0) {
+        html += '<div class="tally-single-container">';
+        for (let r = 0; r < remainder; r++) {
+          html += '<div class="tally-line"></div>';
+        }
+        html += '</div>';
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    function newTallyGame() {
+      const targetDisp = document.getElementById('tally-target-num');
+      const choicesBox = document.getElementById('tally-choices-box');
+      const helper = document.getElementById('tally-helper-text');
+      const fb = document.getElementById('tally-feedback');
+      if (!choicesBox) return;
+
+      if (fb) fb.innerText = '';
+      choicesBox.innerHTML = '';
+
+      const minVal = (tallyQuizRange === 10) ? 1 : (tallyQuizRange === 20 ? 6 : 12);
+      tallyTargetNum = Math.floor(Math.random() * (tallyQuizRange - minVal + 1)) + minVal;
+
+      if (targetDisp) targetDisp.innerText = tallyTargetNum.toLocaleString('fa-IR');
+      if (helper) {
+        const bnd = Math.floor(tallyTargetNum / 5);
+        const rem = tallyTargetNum % 5;
+        helper.innerText = `${bnd.toLocaleString('fa-IR')} دسته ۵ تایی و ${rem.toLocaleString('fa-IR')} تا یکی`;
+      }
+
+      const options = [tallyTargetNum];
+      while (options.length < 3) {
+        const delta = Math.floor(Math.random() * 9) - 4;
+        const fake = tallyTargetNum + delta;
+        if (fake >= 1 && fake <= tallyQuizRange && !options.includes(fake)) {
+          options.push(fake);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'bg-white hover:bg-sky-50 border border-sky-300 rounded-xl p-2 min-h-[70px] flex items-center justify-center shadow-xs active:scale-95 transition btn-3d';
+        card.innerHTML = generateTallyHTML(opt);
+
+        card.onclick = () => {
+          if (opt === tallyTargetNum) {
+            playSuccess();
+            addStars(2);
+            if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! چوب‌خط درسته 👏🥖</span>';
+            setTimeout(newTallyGame, 1500);
+          } else {
+            playWrong();
+            if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">دقت کن! دسته‌های ۵ تایی را دوباره بشمار.</span>';
+          }
+        };
+        choicesBox.appendChild(card);
+      });
+    }
+
+    function newSandboxChallenge() {
+      sandboxUserCount = 0;
+      sandboxTargetNum = Math.floor(Math.random() * 25) + 5;
+      const tDisp = document.getElementById('sandbox-target-display');
+      if (tDisp) tDisp.innerText = sandboxTargetNum.toLocaleString('fa-IR');
+      renderSandboxTally();
+      const fb = document.getElementById('tally-feedback');
+      if (fb) fb.innerText = '';
+    }
+
+    function addSandboxTally() {
+      if (sandboxUserCount < 30) {
+        sandboxUserCount++;
+        renderSandboxTally();
+        playTap();
+      }
+    }
+
+    function removeSandboxTally() {
+      if (sandboxUserCount > 0) {
+        sandboxUserCount--;
+        renderSandboxTally();
+        playTap();
+      }
+    }
+
+    function resetSandboxTally() {
+      sandboxUserCount = 0;
+      renderSandboxTally();
+      playTap();
+    }
+
+    function renderSandboxTally() {
+      const box = document.getElementById('sandbox-tally-display');
+      if (!box) return;
+      if (sandboxUserCount === 0) {
+        box.innerHTML = '<span class="text-slate-400 text-xs">روی «یکی بکش» بزنید</span>';
+      } else {
+        box.innerHTML = generateTallyHTML(sandboxUserCount);
+      }
+    }
+
+    function checkSandboxTally() {
+      const fb = document.getElementById('tally-feedback');
+      if (sandboxUserCount === sandboxTargetNum) {
+        playSuccess();
+        addStars(3);
+        if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">عالی! چوب‌خط با عدد برابر شد! 🌟</span>';
+        setTimeout(newSandboxChallenge, 1600);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">برابر نیست! دوباره امتحان کن.</span>';
+      }
+    }
+
+    /* ==========================================================
+       ۸. جدول شگفت‌انگیز (سودوکو)
+       ======================================================== */
+    let sudokuLevel = 'easy';
+    let currentSudokuSize = 3;
+    let sudokuBoard = [];
+    let sudokuSolution = [];
+    let selectedCell = null;
+
+    const shapePalette = [
+      { id: 'circle', symbol: '⚪' },
+      { id: 'square', symbol: '⬜' },
+      { id: 'triangle', symbol: '🔺' }
+    ];
+
+    const colorPalette = [
+      { id: 'red', symbol: '🔴' },
+      { id: 'yellow', symbol: '🟡' },
+      { id: 'green', symbol: '🟢' },
+      { id: 'blue', symbol: '🔵' }
+    ];
+
+    function setSudokuLevel(lvl) {
+      sudokuLevel = lvl;
+      ['easy', 'medium', 'hard'].forEach(l => {
+        const btn = document.getElementById(`sudoku-lvl-${l}`);
+        if (btn) {
+          btn.className = (l === lvl)
+            ? 'px-2 py-0.5 rounded-lg bg-sky-600 text-white font-black shadow-xs'
+            : 'px-2 py-0.5 rounded-lg text-sky-900';
+        }
+      });
+      playTap();
+      newSudokuGame();
+    }
+
+    function renderSudokuPalette() {
+      const box = document.getElementById('sudoku-palette-box');
+      if (!box) return;
+      box.innerHTML = '';
+      const items = (sudokuLevel === 'easy') ? shapePalette : colorPalette;
+
+      items.forEach(item => {
+        const b = document.createElement('button');
+        b.className = 'w-11 h-11 text-2xl bg-white border border-sky-300 rounded-xl shadow-xs active:scale-95 transition flex items-center justify-center btn-3d';
+        b.innerHTML = item.symbol;
+        b.onclick = () => fillSelectedCell(item.symbol);
+        box.appendChild(b);
+      });
+    }
+
+    function newSudokuGame() {
+      selectedCell = null;
+      const fb = document.getElementById('sudoku-feedback');
+      if (fb) fb.innerText = '';
+      renderSudokuPalette();
+
+      const checkBtn = document.getElementById('sudoku-check-btn');
+
+      if (sudokuLevel === 'easy') {
+        currentSudokuSize = 3;
+        if (checkBtn) checkBtn.style.display = 'inline-flex';
+        generateShapeSudoku3x3();
+      } else if (sudokuLevel === 'medium') {
+        currentSudokuSize = 4;
+        if (checkBtn) checkBtn.style.display = 'none';
+        generateColorSudoku4x4(true);
+      } else {
+        currentSudokuSize = 4;
+        if (checkBtn) checkBtn.style.display = 'inline-flex';
+        generateColorSudoku4x4(false);
+      }
+
+      drawSudokuBoard();
+    }
+
+    function generateShapeSudoku3x3() {
+      const syms = ['⚪', '⬜', '🔺'];
+      const perm = [...syms].sort(() => Math.random() - 0.5);
+      sudokuSolution = [
+        [perm[0], perm[1], perm[2]],
+        [perm[1], perm[2], perm[0]],
+        [perm[2], perm[0], perm[1]]
+      ];
+      sudokuBoard = sudokuSolution.map(row => [...row]);
+      let removed = 0;
+      while (removed < 2) {
+        const r = Math.floor(Math.random() * 3);
+        const c = Math.floor(Math.random() * 3);
+        if (sudokuBoard[r][c] !== '') {
+          sudokuBoard[r][c] = '';
+          removed++;
+        }
+      }
+    }
+
+    function generateColorSudoku4x4(singleHole = false) {
+      const colors = ['🔴', '🟡', '🟢', '🔵'].sort(() => Math.random() - 0.5);
+      sudokuSolution = [
+        [colors[0], colors[1], colors[2], colors[3]],
+        [colors[2], colors[3], colors[0], colors[1]],
+        [colors[1], colors[0], colors[3], colors[2]],
+        [colors[3], colors[2], colors[1], colors[0]]
+      ];
+      sudokuBoard = sudokuSolution.map(row => [...row]);
+
+      if (singleHole) {
+        const r = Math.floor(Math.random() * 4);
+        const c = Math.floor(Math.random() * 4);
+        sudokuBoard[r][c] = '';
+      } else {
+        let removed = 0;
+        while (removed < 3) {
+          const r = Math.floor(Math.random() * 4);
+          const c = Math.floor(Math.random() * 4);
+          if (sudokuBoard[r][c] !== '') {
+            sudokuBoard[r][c] = '';
+            removed++;
+          }
+        }
+      }
+    }
+
+    function drawSudokuBoard() {
+      const grid = document.getElementById('sudoku-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      grid.className = (currentSudokuSize === 3) ? 'grid grid-cols-3 gap-1.5' : 'grid grid-cols-4 gap-1.5';
+
+      for (let r = 0; r < currentSudokuSize; r++) {
+        for (let c = 0; c < currentSudokuSize; c++) {
+          const cell = document.createElement('button');
+          cell.type = 'button';
+          cell.id = `sdk-cell-${r}-${c}`;
+          
+          let cellClasses = 'w-11 h-11 sm:w-13 sm:h-13 rounded-xl flex items-center justify-center text-2xl shadow-xs transition btn-3d ';
+          if (currentSudokuSize === 4) {
+            let bStyles = 'border border-sky-300 ';
+            if (r === 1) bStyles += 'border-b-2 border-b-sky-600 ';
+            if (c === 1) bStyles += 'border-l-2 border-l-sky-600 ';
+            cellClasses += bStyles;
+          } else {
+            cellClasses += 'border border-sky-300 ';
+          }
+
+          const val = sudokuBoard[r][c];
+          if (val === '') {
+            cellClasses += 'bg-sky-50 border-dashed border-sky-400 ';
+            cell.innerHTML = '<span class="text-sky-400 text-sm font-black">؟</span>';
+            cell.onclick = () => selectSudokuCell(r, c);
+          } else {
+            cellClasses += 'bg-white ';
+            cell.innerHTML = val;
+          }
+
+          cell.className = cellClasses;
+          grid.appendChild(cell);
+        }
+      }
+      autoSelectFirstEmpty();
+    }
+
+    function autoSelectFirstEmpty() {
+      for (let r = 0; r < currentSudokuSize; r++) {
+        for (let c = 0; c < currentSudokuSize; c++) {
+          if (sudokuBoard[r][c] === '') {
+            selectSudokuCell(r, c);
+            return;
+          }
+        }
+      }
+    }
+
+    function selectSudokuCell(r, c) {
+      selectedCell = { r, c };
+      document.querySelectorAll('[id^="sdk-cell-"]').forEach(el => {
+        el.classList.remove('ring-3', 'ring-sky-500', 'bg-sky-100');
+      });
+      const cellEl = document.getElementById(`sdk-cell-${r}-${c}`);
+      if (cellEl) {
+        cellEl.classList.add('ring-3', 'ring-sky-500', 'bg-sky-100');
+        playTap();
+      }
+    }
+
+    function fillSelectedCell(symbol) {
+      if (!selectedCell) return;
+      const { r, c } = selectedCell;
+      const cellEl = document.getElementById(`sdk-cell-${r}-${c}`);
+      if (!cellEl) return;
+
+      cellEl.innerHTML = `<span class="animate-pop">${symbol}</span>`;
+      playTap();
+
+      if (sudokuLevel === 'medium') {
+        const correct = sudokuSolution[r][c];
+        const fb = document.getElementById('sudoku-feedback');
+        if (symbol === correct) {
+          playSuccess();
+          addStars(2);
+          if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! جدول کامل شد! 🧩</span>';
+          setTimeout(newSudokuGame, 1500);
+        } else {
+          playWrong();
+          if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">رنگ تکراری است!</span>';
+        }
+        return;
+      }
+
+      cellEl.dataset.userVal = symbol;
+    }
+
+    function checkFullSudoku() {
+      const fb = document.getElementById('sudoku-feedback');
+      let allFilled = true;
+      let isCorrect = true;
+
+      for (let r = 0; r < currentSudokuSize; r++) {
+        for (let c = 0; c < currentSudokuSize; c++) {
+          if (sudokuBoard[r][c] === '') {
+            const cellEl = document.getElementById(`sdk-cell-${r}-${c}`);
+            const userVal = cellEl ? cellEl.dataset.userVal : '';
+            if (!userVal) allFilled = false;
+            else if (userVal !== sudokuSolution[r][c]) isCorrect = false;
+          }
+        }
+      }
+
+      if (!allFilled) {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-amber-700 bg-amber-50 px-3 py-1 rounded-xl">همه‌ی خانه‌های خالی را پر کن!</span>';
+        return;
+      }
+
+      if (isCorrect) {
+        playSuccess();
+        addStars(3);
+        if (fb) fb.innerHTML = '<span class="text-sky-800 bg-sky-100 px-3 py-1 rounded-xl">آفرین! جدول شگفت‌انگیز درست چیده شد! 👏</span>';
+        setTimeout(newSudokuGame, 1800);
+      } else {
+        playWrong();
+        if (fb) fb.innerHTML = '<span class="text-rose-600 bg-rose-50 px-3 py-1 rounded-xl">چند خانه تکراری دارد؛ دوباره چک کن!</span>';
+      }
+    }
+
+    /* ابزارهای معلم */
+    function toggleTeacherModal() {
+      document.getElementById('teacher-modal').classList.toggle('hidden');
+      playTap();
+    }
+
+    function pickStudent() {
+      const names = document.getElementById('student-names').value.split(',').map(s=>s.trim()).filter(Boolean);
+      const box = document.getElementById('picked-name');
+      let count = 0;
+      const t = setInterval(() => {
+        box.innerText = names[Math.floor(Math.random() * names.length)];
+        count++;
+        if (count > 10) {
+          clearInterval(t);
+          playSuccess();
+        }
+      }, 70);
+    }
+
+    let timerId = null;
+    function startTimer(sec) {
+      clearInterval(timerId);
+      let s = sec;
+      const disp = document.getElementById('teacher-timer');
+      timerId = setInterval(() => {
+        s--;
+        const m = Math.floor(s / 60).toString().padStart(2, '0');
+        const remS = (s % 60).toString().padStart(2, '0');
+        disp.innerText = `${m}:${remS}`;
+        if (s <= 0) {
+          clearInterval(timerId);
+          disp.innerText = 'زمان پایان!';
+          playWrong();
+        }
+      }, 1000);
+      playTap();
+    }
+
+    function stopTimer() {
+      clearInterval(timerId);
+      document.getElementById('teacher-timer').innerText = '00:00';
+      playTap();
+    }
+
+    function celebrateClass() {
+      playSuccess();
+      addStars(5);
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+    }
+
+    // راه‌اندازی اولیه
+    window.addEventListener('DOMContentLoaded', () => {
+      newCompareGame();
+      newPatternGame();
+      newPureMathGame();
+      newCountingGame();
+      newAnimalFarmGame();
+      newTallyGame();
+      buildAxisUI();
+      newAxisGame();
+      newSudokuGame();
+
+      // بستن دراپ‌داون تم در صورت کلیک در محیط بیرون
+      document.addEventListener('click', (e) => {
+        const dd = document.getElementById('theme-dropdown');
+        const themeBtn = e.target.closest('[title="تغییر تم رنگی برنامه"]');
+        if (dd && !dd.contains(e.target) && !themeBtn) {
+          dd.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
